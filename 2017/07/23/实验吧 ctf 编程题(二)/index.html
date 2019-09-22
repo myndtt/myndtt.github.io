@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="myndtt">
+
+
+
+<meta name="description" content="三：奖券 这是水题，可以暴力 123456num=0for a in range(100000,1000000):	b=str(a)	if &apos;4&apos; not in b:		num+=1print num">
+<meta name="keywords" content="ctf,实验吧,编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验吧 CTF 编程题（二）">
+<meta property="og:url" content="https://myndtt.github.io/2017/07/23/实验吧 ctf 编程题(二)/index.html">
+<meta property="og:site_name" content="myndtt || blog">
+<meta property="og:description" content="三：奖券 这是水题，可以暴力 123456num=0for a in range(100000,1000000):	b=str(a)	if &apos;4&apos; not in b:		num+=1print num">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-22T05:04:46.326Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实验吧 CTF 编程题（二）">
+<meta name="twitter:description" content="三：奖券 这是水题，可以暴力 123456num=0for a in range(100000,1000000):	b=str(a)	if &apos;4&apos; not in b:		num+=1print num">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="myndtt || blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/images/1.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>实验吧 CTF 编程题（二） | myndtt || blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/images/1.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">myndtt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">从天堂到彼界 路过人间</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.sec-wiki.com/">sec-wiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.myh0st.cn/">myh0st</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.leavesongs.com/">大P神</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.laruence.com/">风神(风雪之隅)</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yulegeyu.com/">雨师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://momomoxiaoxi.com/">小西师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://lorexxar.cn/">LoRexxar</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yqxiaojunjie.com/">乐清师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://0x48.pw/">Hcamael</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://chybeta.github.io/">Chybeta</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/lcamry">lcamry</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.lynahex.com/">lynahex</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy/">柠檬师傅</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">小菜鸡 奋斗中...</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>   
+   	 <div id="circle"></div>
+		<div id="circletext"><strong style="font-size: 12px;"><a>词不达意</a></strong></div>
+		<div id="circle1"></div>             
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">myndtt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/images/1.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">myndtt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">从天堂到彼界 路过人间</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-实验吧 ctf 编程题(二)" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/23/实验吧 ctf 编程题(二)/" class="article-date">
+      <time datetime="2017-07-23T08:35:18.000Z" itemprop="datePublished">2017-07-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      实验吧 CTF 编程题（二）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>三：奖券</p>
+<p>这是水题，可以暴力</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">num=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> range(<span class="number">100000</span>,<span class="number">1000000</span>):</span><br><span class="line">	b=str(a)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">'4'</span> <span class="keyword">not</span> <span class="keyword">in</span> b:</span><br><span class="line">		num+=<span class="number">1</span></span><br><span class="line"><span class="keyword">print</span> num</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>四：三羊献瑞</p>
+<p>也是水题,这里提一点，许多人看见这个就直接遍历，其实看看题目可以知道一些东西，比如这个“祥”字加上“三”字进位了，并且进位后最高位为“三”字，那么可以确定“三”字为1，则“祥”字为9了，减少遍历</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line"> <span class="keyword">for</span> g <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">  <span class="keyword">for</span> h <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">   <span class="keyword">if</span> (a!=b) <span class="keyword">and</span> (a!=c) <span class="keyword">and</span> (a!=d) <span class="keyword">and</span> (a!=f) <span class="keyword">and</span> (a!=g) <span class="keyword">and</span> (a!=h):</span><br><span class="line">    <span class="keyword">if</span> (b!=c)<span class="keyword">and</span> (b!=d)<span class="keyword">and</span> (b!=e) <span class="keyword">and</span> (b!=f) <span class="keyword">and</span> (b!=g) <span class="keyword">and</span> (b!=h):</span><br><span class="line">     <span class="keyword">if</span> (c!=d)<span class="keyword">and</span> (c!=e) <span class="keyword">and</span> (c!=f) <span class="keyword">and</span> (c!=g) <span class="keyword">and</span> (c!=h):</span><br><span class="line">      <span class="keyword">if</span> (d!=e) <span class="keyword">and</span> (d!=f) <span class="keyword">and</span> (d!=g) <span class="keyword">and</span> (d!=h):</span><br><span class="line">       <span class="keyword">if</span> (e!=f) <span class="keyword">and</span> (e!=g) <span class="keyword">and</span> (e!=h):</span><br><span class="line">        <span class="keyword">if</span>(f!=g) <span class="keyword">and</span> (f!=h):</span><br><span class="line">         <span class="keyword">if</span> (g!=h):</span><br><span class="line">          sum=(a+e)*<span class="number">1000</span>+(f+b)*<span class="number">100</span>+(g+c)*<span class="number">10</span>+d+b</span><br><span class="line">          cal=<span class="number">10000</span>+<span class="number">1000</span>*f+<span class="number">100</span>*c+<span class="number">10</span>*b+h</span><br><span class="line">          <span class="keyword">if</span>(sum==cal):</span><br><span class="line">            <span class="keyword">print</span> e,f,g,b</span><br><span class="line">            exit()</span><br></pre></td></tr></table></figure>
+
+<p>五：找素数<br>很简单，涉及到的东西就是枚举加上素数的判定 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isPrime</span><span class="params">(n)</span>:</span>    </span><br><span class="line">	<span class="keyword">if</span> n &lt;= <span class="number">1</span>:    </span><br><span class="line">		<span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, int(math.sqrt(n)) + <span class="number">1</span>):    </span><br><span class="line">		<span class="keyword">if</span> n % i == <span class="number">0</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">'__main__'</span>:</span><br><span class="line">	num=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> a <span class="keyword">in</span> range(<span class="number">367</span>,<span class="number">100000000</span>,<span class="number">186</span>):</span><br><span class="line">		flag=isPrime(a)</span><br><span class="line">		<span class="keyword">if</span>(flag):</span><br><span class="line">			num+=<span class="number">1</span></span><br><span class="line">			<span class="keyword">if</span>(num==<span class="number">151</span>):</span><br><span class="line">				<span class="keyword">print</span> a</span><br><span class="line">				exit()</span><br></pre></td></tr></table></figure>
+
+<p>写在最后：<br>切莫浮沙建堡垒</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
+        <p><span>发布时间:</span>2017-07-23, 16:35:18</p>
+        <p><span>最后更新:</span>2019-09-22, 13:04:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/23/实验吧 ctf 编程题(二)/" title="实验吧 CTF 编程题（二）">https://myndtt.github.io/2017/07/23/实验吧 ctf 编程题(二)/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2017/07/23/实验吧 ctf 编程题(二)/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/07/23/实验吧 ctf 编程题(三)/">
+                    实验吧 CTF 编程题（三）
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/07/23/实验吧 ctf 编程题(一)/">
+                    实验吧 CTF 编程题 （一）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"实验吧 CTF 编程题（二）　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2148375';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/07/23/实验吧 ctf 编程题(三)/" title="上一篇: 实验吧 CTF 编程题（三）">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/07/23/实验吧 ctf 编程题(一)/" title="下一篇: 实验吧 CTF 编程题 （一）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 myndtt
+            </div>
+            <div class="footer-right">
+                <a href="#" target="_blank" >没有你的天堂...</a> <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

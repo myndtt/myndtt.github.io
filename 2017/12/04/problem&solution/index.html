@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="myndtt">
+
+
+
+<meta name="description" content="0x00.前言这完全是一篇水文，只是记录了一下平时遇到的一些问题及查找到的解决方法。 0x01.琴声悠悠一.echo “{${phpinfo()}}”可以输出php环境这个问题很早以前就有人提出来了，但是一直都没什么人解答，我其实也不知道真实的情况具体是什么，只是根据测试去推测可能是什么。 1.phpinfo()首先phpinfo()函数是php的内置函数，函数原型是">
+<meta name="keywords" content="记录,php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="problem&amp;solution">
+<meta property="og:url" content="https://myndtt.github.io/2017/12/04/problem&solution/index.html">
+<meta property="og:site_name" content="myndtt || blog">
+<meta property="og:description" content="0x00.前言这完全是一篇水文，只是记录了一下平时遇到的一些问题及查找到的解决方法。 0x01.琴声悠悠一.echo “{${phpinfo()}}”可以输出php环境这个问题很早以前就有人提出来了，但是一直都没什么人解答，我其实也不知道真实的情况具体是什么，只是根据测试去推测可能是什么。 1.phpinfo()首先phpinfo()函数是php的内置函数，函数原型是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://myndtt.github.io/images/36.png">
+<meta property="og:image" content="https://myndtt.github.io/images/37.png">
+<meta property="og:image" content="https://myndtt.github.io/images/38.png">
+<meta property="og:image" content="https://myndtt.github.io/images/39.png">
+<meta property="og:updated_time" content="2019-09-22T05:04:46.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="problem&amp;solution">
+<meta name="twitter:description" content="0x00.前言这完全是一篇水文，只是记录了一下平时遇到的一些问题及查找到的解决方法。 0x01.琴声悠悠一.echo “{${phpinfo()}}”可以输出php环境这个问题很早以前就有人提出来了，但是一直都没什么人解答，我其实也不知道真实的情况具体是什么，只是根据测试去推测可能是什么。 1.phpinfo()首先phpinfo()函数是php的内置函数，函数原型是">
+<meta name="twitter:image" content="https://myndtt.github.io/images/36.png">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="myndtt || blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/images/1.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>problem&amp;solution | myndtt || blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/images/1.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">myndtt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">从天堂到彼界 路过人间</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.sec-wiki.com/">sec-wiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.myh0st.cn/">myh0st</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.leavesongs.com/">大P神</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.laruence.com/">风神(风雪之隅)</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yulegeyu.com/">雨师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://momomoxiaoxi.com/">小西师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://lorexxar.cn/">LoRexxar</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yqxiaojunjie.com/">乐清师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://0x48.pw/">Hcamael</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://chybeta.github.io/">Chybeta</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/lcamry">lcamry</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.lynahex.com/">lynahex</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy/">柠檬师傅</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">小菜鸡 奋斗中...</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>   
+   	 <div id="circle"></div>
+		<div id="circletext"><strong style="font-size: 12px;"><a>词不达意</a></strong></div>
+		<div id="circle1"></div>             
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">myndtt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/images/1.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">myndtt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">从天堂到彼界 路过人间</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-problem&amp;solution" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/04/problem&solution/" class="article-date">
+      <time datetime="2017-12-04T06:25:18.000Z" itemprop="datePublished">2017-12-04</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      problem&amp;solution
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h2><p>这完全是一篇水文，只是记录了一下平时遇到的一些问题及查找到的解决方法。</p>
+<h2 id="0x01-琴声悠悠"><a href="#0x01-琴声悠悠" class="headerlink" title="0x01.琴声悠悠"></a>0x01.琴声悠悠</h2><h3 id="一-echo-“-phpinfo-”可以输出php环境"><a href="#一-echo-“-phpinfo-”可以输出php环境" class="headerlink" title="一.echo “{${phpinfo()}}”可以输出php环境"></a>一.echo “{${phpinfo()}}”可以输出php环境</h3><p>这个问题很早以前就有人提出来了，但是一直都没什么人解答，我其实也不知道真实的情况具体是什么，只是根据测试去推测可能是什么。</p>
+<h4 id="1-phpinfo"><a href="#1-phpinfo" class="headerlink" title="1.phpinfo()"></a>1.phpinfo()</h4><p>首先phpinfo()函数是php的内置函数，函数原型是</p>
+<p><img src="https://myndtt.github.io/images/36.png" alt="36"></p>
+<a id="more"></a>
+
+<p>对，这个函数返回值是一个布尔类型，但是它是可以输出配置环境的。</p>
+<p><img src="https://myndtt.github.io/images/37.png" alt="37"></p>
+<p><code>可以说只要这个函数得到了调用,只要调用print echo var_dump等函数都可以将php环境信息输出到屏幕上。</code></p>
+<h4 id="2-php变量"><a href="#2-php变量" class="headerlink" title="2.php变量"></a>2.php变量</h4><p><img src="https://myndtt.github.io/images/38.png" alt="38"></p>
+<p>众所周知，php中有效变量由$+变量名字组成，变量名字必须为<code>(字母或者下划线开头)</code>,除此之外，变量名字可以由其他函数返回值或者变量代替，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$aaa=<span class="string">"man"</span>;</span><br><span class="line">$man=<span class="string">"hello"</span>;</span><br><span class="line"><span class="keyword">echo</span> $$aaa;  <span class="comment">//输出hello</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"man"</span>;</span><br><span class="line">&#125;</span><br><span class="line">$man=<span class="string">"hello"</span>;</span><br><span class="line"><span class="keyword">echo</span> $&#123;test()&#125;;<span class="comment">//输出hello;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-php双引号中的大括号"><a href="#3-php双引号中的大括号" class="headerlink" title="3.php双引号中的大括号"></a>3.php双引号中的大括号</h4><p>网上对这一部分有了许多解析，简单总结就是一个界定的作用，如上面看到的那样。</p>
+<p><code>${test()}</code> ,这里就将test函数括起来，要求php去执行、解析。</p>
+<p>有了上面三个小问题的简单解释<code>echo &quot;{${phpinfo()}}&quot;</code> 也就没什么了。</p>
+<p>首先在字符串在双引号中，所以最外面一层双引号进行界定分开，表示其中需要解析，然而发现里面是${}结构，则需要解析这个变量名字，也即解析phpinfo()函数，此函数解析又有前面的打印函数，自然将php环境输出至屏幕，而phpinfo()执行成功返回1，不允许这样的变量，页面最后面报错。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//echo "&#123;$&#123;phpversion()&#125;&#125;"; //可以从返回信息中得到版本，其他预置函数都可以</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&#123;$&#123;phpinfo()&#125;&#125;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://myndtt.github.io/images/39.png" alt="39"></p>
+<h3 id="二-select语句执行流程"><a href="#二-select语句执行流程" class="headerlink" title="二.select语句执行流程"></a>二.select语句执行流程</h3><p>一直想知道select语句执行顺序到底是怎样的，找到一篇十分详细的文章解决了我的问题。</p>
+<p><a href="https://www.cnblogs.com/annsshadow/p/5037667.html" target="_blank" rel="noopener">https://www.cnblogs.com/annsshadow/p/5037667.html</a>    </p>
+<p>(看原文档更好)</p>
+<p>select语句的原型可视为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT</span><br><span class="line">    &lt; select_list &gt;</span><br><span class="line">FROM</span><br><span class="line">    &lt; left_table &gt; &lt; join_type &gt;</span><br><span class="line">JOIN &lt; right_table &gt; ON &lt; join_condition &gt;</span><br><span class="line">WHERE</span><br><span class="line">    &lt; where_condition &gt;</span><br><span class="line">GROUP BY</span><br><span class="line">    &lt; group_by_list &gt;</span><br><span class="line">HAVING</span><br><span class="line">    &lt; having_condition &gt;</span><br><span class="line">ORDER BY</span><br><span class="line">    &lt; order_by_condition &gt;</span><br><span class="line">LIMIT &lt; limit_number &gt;</span><br></pre></td></tr></table></figure>
+
+<p>执行顺序是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM &lt;left_table&gt;</span><br><span class="line">ON &lt;join_condition&gt;</span><br><span class="line">&lt;join_type&gt; JOIN &lt;right_table&gt;</span><br><span class="line">WHERE &lt;where_condition&gt;</span><br><span class="line">GROUP BY &lt;group_by_list&gt;</span><br><span class="line">HAVING &lt;having_condition&gt;</span><br><span class="line">SELECT </span><br><span class="line">DISTINCT &lt;select_list&gt;</span><br><span class="line">ORDER BY &lt;order_by_condition&gt;</span><br><span class="line">LIMIT &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
+
+<p>简单解析可为：首先看看select的字段来自哪里，即先解析<code>from</code>得到后面的表，如何有多表且是<code>用join</code>联合起来则就按<code>on</code>条件进行联合。得到字段来自的表后，将表加入的内存中。随后解析<code>where</code>按一定条件进行筛选，得到新的虚表。有<code>group by</code>则将该虚表按条件进行重组，重组后如果有<code>having</code>则对按条件对重组后的表进行过滤得到全新的虚表，随后<code>select</code>进行字段选择，如果有<code>disinct</code>存在就将重复的删除(指定索引唯一去除重复数据)。z再然后就是<code>order by</code>排序和<code>limit</code>进行限定。举一个简单小栗子，sql注入常会出现这样的句子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id from user where username=&apos;a&apos; or 1</span><br></pre></td></tr></table></figure>
+
+<p>首先mysql进行词法分析，发现第一个字为select关键字，随即找from关键字确定表为user，将user表加载至内存得到虚表1，此时指针指向虚表1中第一条数据，然后去找where关键字进行条件判断该数据是否符合要求。这里条件为<code>username=&#39;a&#39; or 1</code> 恒返回1为真，也即虚表1中第一条数据符合要求，将 数据加载至虚表2中，表中所有数据检索完后，执行select,从虚表2中进行字段选择得到虚表3，随后将虚表3进行返回。（这一段表达可能有误，但是大致过程是如此）</p>
+<h2 id="0x02-篱笆外"><a href="#0x02-篱笆外" class="headerlink" title="0x02.篱笆外"></a>0x02.篱笆外</h2><p>mysql中udf库，链接：<a href="https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172" target="_blank" rel="noopener">https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172</a></p>
+<p>这是一道web题，提示 <code>咦，奇怪，说好的WEB题呢，怎么成逆向了？不过里面有个help_me函数挺有意思的哦</code></p>
+<p>根据文件udf.so查找资料到有这么一句话：<code>用户可以自己建立包含自定义函数得动态库来创建自定义函数，简称udf.这里是关键</code>。由于是.so动态库则用linux(ubuntu)环境进行测试。</p>
+<h4 id="1-过程"><a href="#1-过程" class="headerlink" title="1.过程"></a>1.过程</h4><p>ubuntu下载mysql，将下载得<code>udf.so.02f8981200697e5eeb661e64797fc172</code>放入mysql默认.so文件的目录(/usr/lib/mysql/plugin)下,登入mysql依次执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create function help_me returns string soname &apos;udf.so.02f8981200697e5eeb661e64797fc172&apos;;//激活该//函数</span><br><span class="line">select help_me();//根据提示执行后面</span><br><span class="line">create function getflag returns string soname &apos;udf.so.02f8981200697e5eeb661e64797fc172&apos;;</span><br><span class="line">select getflag();</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-其他"><a href="#2-其他" class="headerlink" title="2.其他"></a>2.其他</h4><p>可以利用此.so文件对mysql进行提权。如果有sql注入点可以上传文件，由此那么我们可以上传一个可以执行系统函数的.so文件进行提权。</p>
+<p><a href="http://www.91ri.org/16540.html" target="_blank" rel="noopener">http://www.91ri.org/16540.html</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/12/04/problem&solution/">problem&amp;solution</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
+        <p><span>发布时间:</span>2017-12-04, 14:25:18</p>
+        <p><span>最后更新:</span>2019-09-22, 13:04:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/04/problem&solution/" title="problem&amp;solution">https://myndtt.github.io/2017/12/04/problem&amp;solution/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2017/12/04/problem&amp;solution/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/12/07/parse-url/">
+                    parse_url
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/11/14/iamsowly/">
+                    solveme.kr-iamsowly
+                </a>
+            </div>
+        
+    </nav>
+
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00.前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-琴声悠悠"><span class="toc-number">2.</span> <span class="toc-text">0x01.琴声悠悠</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-echo-“-phpinfo-”可以输出php环境"><span class="toc-number">2.1.</span> <span class="toc-text">一.echo “{${phpinfo()}}”可以输出php环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-phpinfo"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.phpinfo()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-php变量"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.php变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-php双引号中的大括号"><span class="toc-number">2.1.3.</span> <span class="toc-text">3.php双引号中的大括号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-select语句执行流程"><span class="toc-number">2.2.</span> <span class="toc-text">二.select语句执行流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-篱笆外"><span class="toc-number">3.</span> <span class="toc-text">0x02.篱笆外</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-过程"><span class="toc-number">3.0.1.</span> <span class="toc-text">1.过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-其他"><span class="toc-number">3.0.2.</span> <span class="toc-text">2.其他</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"problem&solution　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2148375';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/12/07/parse-url/" title="上一篇: parse_url">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/11/14/iamsowly/" title="下一篇: solveme.kr-iamsowly">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 myndtt
+            </div>
+            <div class="footer-right">
+                <a href="#" target="_blank" >没有你的天堂...</a> <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

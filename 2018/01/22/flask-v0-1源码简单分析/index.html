@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="myndtt">
+
+
+
+<meta name="description" content="0x00.前言想学习python的flask，看了《FlaskWeb开发：基于Python的Web应用开发实战》这本书，觉得很OK👌。之前彭师兄分析过flask v0.1的源码，听说代码不长，加之网上解释甚多，所以自己也想看看，就其本身，本文无意义，有错误更是可能，只是记录而已。 0x01.获取第一步获取git clone https://github.com/pallets/flask.git">
+<meta name="keywords" content="python,记录,flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flask v0.1源码简单分析">
+<meta property="og:url" content="https://myndtt.github.io/2018/01/22/flask-v0-1源码简单分析/index.html">
+<meta property="og:site_name" content="myndtt || blog">
+<meta property="og:description" content="0x00.前言想学习python的flask，看了《FlaskWeb开发：基于Python的Web应用开发实战》这本书，觉得很OK👌。之前彭师兄分析过flask v0.1的源码，听说代码不长，加之网上解释甚多，所以自己也想看看，就其本身，本文无意义，有错误更是可能，只是记录而已。 0x01.获取第一步获取git clone https://github.com/pallets/flask.git">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://myndtt.github.io/images/54.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1563354-26e27df8f32e9d55.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/545">
+<meta property="og:image" content="http://myndtt.github.io/images/55.png">
+<meta property="og:image" content="http://myndtt.github.io/images/56.png">
+<meta property="og:updated_time" content="2019-09-22T05:04:46.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flask v0.1源码简单分析">
+<meta name="twitter:description" content="0x00.前言想学习python的flask，看了《FlaskWeb开发：基于Python的Web应用开发实战》这本书，觉得很OK👌。之前彭师兄分析过flask v0.1的源码，听说代码不长，加之网上解释甚多，所以自己也想看看，就其本身，本文无意义，有错误更是可能，只是记录而已。 0x01.获取第一步获取git clone https://github.com/pallets/flask.git">
+<meta name="twitter:image" content="http://myndtt.github.io/images/54.png">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="myndtt || blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/images/1.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>flask v0.1源码简单分析 | myndtt || blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/images/1.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">myndtt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">从天堂到彼界 路过人间</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.sec-wiki.com/">sec-wiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.myh0st.cn/">myh0st</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.leavesongs.com/">大P神</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.laruence.com/">风神(风雪之隅)</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yulegeyu.com/">雨师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://momomoxiaoxi.com/">小西师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://lorexxar.cn/">LoRexxar</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yqxiaojunjie.com/">乐清师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://0x48.pw/">Hcamael</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://chybeta.github.io/">Chybeta</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/lcamry">lcamry</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.lynahex.com/">lynahex</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy/">柠檬师傅</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">小菜鸡 奋斗中...</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>   
+   	 <div id="circle"></div>
+		<div id="circletext"><strong style="font-size: 12px;"><a>词不达意</a></strong></div>
+		<div id="circle1"></div>             
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">myndtt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/images/1.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">myndtt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">从天堂到彼界 路过人间</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-flask-v0-1源码简单分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/22/flask-v0-1源码简单分析/" class="article-date">
+      <time datetime="2018-01-22T05:50:17.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      flask v0.1源码简单分析
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h2><p>想学习python的flask，看了《FlaskWeb开发：基于Python的Web应用开发实战》这本书，觉得很OK👌。之前彭师兄分析过flask v0.1的源码，听说代码不长，加之网上解释甚多，所以自己也想看看，就其本身，本文无意义，有错误更是可能，只是记录而已。</p>
+<h2 id="0x01-获取"><a href="#0x01-获取" class="headerlink" title="0x01.获取"></a>0x01.获取</h2><p>第一步获取<code>git clone https://github.com/pallets/flask.git</code>,这是最新版本的</p>
+<p>第二步 <code>git tag</code>看版本</p>
+<p>第三步<code>git reset --hard xx</code>回退到对应版本</p>
+<p>最后是这样</p>
+<p><img src="http://myndtt.github.io/images/54.png" alt="54"></p>
+<p>主要内容在flask.py文件里面</p>
+<a id="more"></a>
+
+<h2 id="0x02-简要分析"><a href="#0x02-简要分析" class="headerlink" title="0x02.简要分析"></a>0x02.简要分析</h2><h3 id="1-包"><a href="#1-包" class="headerlink" title="1.包"></a>1.包</h3><p>flask.py导入的包情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> with_statement</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> local</span><br><span class="line"><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Environment, PackageLoader, FileSystemLoader</span><br><span class="line"><span class="keyword">from</span> werkzeug <span class="keyword">import</span> Request <span class="keyword">as</span> RequestBase, Response <span class="keyword">as</span> ResponseBase, \</span><br><span class="line">     LocalStack, LocalProxy, create_environ, cached_property, \</span><br><span class="line">     SharedDataMiddleware</span><br><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> Map, Rule</span><br><span class="line"><span class="keyword">from</span> werkzeug.exceptions <span class="keyword">import</span> HTTPException, InternalServerError</span><br><span class="line"><span class="keyword">from</span> werkzeug.contrib.securecookie <span class="keyword">import</span> SecureCookie</span><br><span class="line"></span><br><span class="line"><span class="comment"># utilities we import from Werkzeug and Jinja2 that are unused</span></span><br><span class="line"><span class="comment"># in the module but are exported as public interface.</span></span><br><span class="line"><span class="keyword">from</span> werkzeug <span class="keyword">import</span> abort, redirect</span><br><span class="line"><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Markup, escape</span><br></pre></td></tr></table></figure>
+
+<p>Werkzeug是<a href="https://baike.baidu.com/item/Python" target="_blank" rel="noopener">Python</a>的<a href="https://baike.baidu.com/item/WSGI" target="_blank" rel="noopener">WSGI</a>规范的实用函数库，而对于WSGI,廖先生解释的很好啊<a href="https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001386832689740b04430a98f614b6da89da2157ea3efe2000" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001386832689740b04430a98f614b6da89da2157ea3efe2000</a></p>
+<p>盗一张简书的图</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1563354-26e27df8f32e9d55.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/545" alt="55"></p>
+<p>而jinja2是flask其默认的页面模版，其格式有点像最初的将java代码写在jsp页面中…</p>
+<h3 id="2-上下文"><a href="#2-上下文" class="headerlink" title="2.上下文"></a>2.上下文</h3><p>flask.py最下面是这几行，要看懂flask需要了解其上下文机制</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_request_ctx_stack = LocalStack()<span class="comment">#建立request栈</span></span><br><span class="line">current_app = LocalProxy(<span class="keyword">lambda</span>: _request_ctx_stack.top.app)<span class="comment">#栈当前app</span></span><br><span class="line">request = LocalProxy(<span class="keyword">lambda</span>: _request_ctx_stack.top.request)<span class="comment">#栈当前request</span></span><br><span class="line">session = LocalProxy(<span class="keyword">lambda</span>: _request_ctx_stack.top.session)<span class="comment">#栈当前session</span></span><br><span class="line">g = LocalProxy(<span class="keyword">lambda</span>: _request_ctx_stack.top.g)<span class="comment">#当栈前g</span></span><br></pre></td></tr></table></figure>
+
+<p>书中有提到</p>
+<p><img src="http://myndtt.github.io/images/55.png" alt="55"></p>
+<p>对于上下文的解释更有<a href="https://blog.tonyseek.com/post/the-context-mechanism-of-flask/" target="_blank" rel="noopener">https://blog.tonyseek.com/post/the-context-mechanism-of-flask/</a></p>
+<p>解释的很好。</p>
+<h3 id="3-简单流程"><a href="#3-简单流程" class="headerlink" title="3.简单流程"></a>3.简单流程</h3><p>下面一大串其实主要为了解释上门那张图</p>
+<h4 id="一-app-Flask-name"><a href="#一-app-Flask-name" class="headerlink" title="一.app=Flask(__name__)"></a>一.<code>app=Flask(__name__)</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#程序入口 建立app实例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(object)</span>:</span></span><br></pre></td></tr></table></figure>
+
+<p>并且其中初始化一些东西</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">self.template_context_processors = [_default_template_ctx_processor]</span><br><span class="line"></span><br><span class="line">        self.url_map = Map()<span class="comment">#URL endpoint function 对应的map</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.static_path <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            self.url_map.add(Rule(self.static_path + <span class="string">'/&lt;filename&gt;'</span>,</span><br><span class="line">                                  build_only=<span class="literal">True</span>, endpoint=<span class="string">'static'</span>))</span><br><span class="line">            <span class="keyword">if</span> pkg_resources <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                target = (self.package_name, <span class="string">'static'</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                target = os.path.join(self.root_path, <span class="string">'static'</span>)</span><br><span class="line">            self.wsgi_app = SharedDataMiddleware(self.wsgi_app, &#123;<span class="comment">#静态</span></span><br><span class="line">                self.static_path: target</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#: the Jinja2 environment.  It is created from the</span></span><br><span class="line">        <span class="comment">#: :attr:`jinja_options` and the loader that is returned</span></span><br><span class="line">        <span class="comment">#: by the :meth:`create_jinja_loader` function.</span></span><br><span class="line">        self.jinja_env = Environment(loader=self.create_jinja_loader(),</span><br><span class="line">                                     **self.jinja_options)</span><br><span class="line">        self.jinja_env.globals.update(</span><br><span class="line">            url_for=url_for,</span><br><span class="line">            get_flashed_messages=get_flashed_messages</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+
+<p>这里还是很关键的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Flask应用使用werkzeug库中的Map类和Rule类来处理URL的模式匹配，每一个URL模式对应一个Rule实例，这些Rule实例最终会作为参数传递给Map类构造包含所有URL模式的一个“地图”。</span><br><span class="line">Flask使用SharedDataMiddleware来对静态内容的访问支持，也即是static目录下的资源可以被外部，</span><br></pre></td></tr></table></figure>
+
+<p>flask的route设计思路，这篇足以<a href="https://segmentfault.com/a/1190000004213652" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004213652</a></p>
+<h4 id="二-app-run"><a href="#二-app-run" class="headerlink" title="二.app.run()"></a>二.<code>app.run()</code></h4><p>开始运行flask类下的<code>run()</code>函数,run函数最后一句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> run_simple(host, port, self, **options)<span class="comment">#开始运行,这里的run_simple是werkzeug里面的</span></span><br></pre></td></tr></table></figure>
+
+<p>在对应·的<code>/lib/python版本/site-packes/werkzeug/serving.py</code>文件中可以找到该函数,该函数属于</p>
+<p><code>class ForkingWSGIServer(ForkingMixIn, BaseWSGIServer):</code>类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_simple</span><span class="params">(hostname, port, application, use_reloader=False,</span></span></span><br><span class="line"><span class="function"><span class="params">               use_debugger=False, use_evalex=True,</span></span></span><br><span class="line"><span class="function"><span class="params">               extra_files=None, reloader_interval=<span class="number">1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">               reloader_type=<span class="string">'auto'</span>, threaded=False,</span></span></span><br><span class="line"><span class="function"><span class="params">               processes=<span class="number">1</span>, request_handler=None, static_files=None,</span></span></span><br><span class="line"><span class="function"><span class="params">               passthrough_errors=False, ssl_context=None)</span>:</span></span><br><span class="line">    <span class="string">"""Start a WSGI application. Optional features include a reloader,</span></span><br><span class="line"><span class="string">    multithreading and fork support.</span></span><br></pre></td></tr></table></figure>
+
+<p>该函数下同时执行<code>inner()</code>函数,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">_log(<span class="string">'info'</span>, <span class="string">' * Running on %s://%s:%d/ %s'</span>,</span><br><span class="line">         ssl_context <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> <span class="string">'http'</span> <span class="keyword">or</span> <span class="string">'https'</span>,</span><br><span class="line">         display_hostname, port, quit_msg)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        fd = int(os.environ[<span class="string">'WERKZEUG_SERVER_FD'</span>])</span><br><span class="line">    <span class="keyword">except</span> (LookupError, ValueError):</span><br><span class="line">        fd = <span class="literal">None</span></span><br><span class="line">    srv = make_server(hostname, port, application, threaded,</span><br><span class="line">                      processes, request_handler,</span><br><span class="line">                      passthrough_errors, ssl_context,</span><br><span class="line">                      fd=fd)</span><br><span class="line">    <span class="keyword">if</span> fd <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        log_startup(srv.socket)</span><br><span class="line">    srv.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<p>这里执行了<code>make_server</code>,make_server()函数默认生成一个WSGIServer类,同时最后一句执行<code>serve_forever()</code>函数，该函数属于<code>class BaseWSGIServer(HTTPServer, object):</code>类，跟进</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serve_forever</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.shutdown_signal = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        HTTPServer.serve_forever(self)</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        self.server_close()</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>HTTPServer.serve_forever(self)</code> 进入对应<code>socketserver.py</code>文件跟进</p>
+<h4 id="三-进入socketserver-py"><a href="#三-进入socketserver-py" class="headerlink" title="三.进入socketserver.py"></a>三.进入socketserver.py</h4><hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serve_forever</span><span class="params">(self, poll_interval=<span class="number">0.5</span>)</span>:</span></span><br><span class="line">        <span class="string">"""Handle one request at a time until shutdown.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Polls for shutdown every poll_interval seconds. Ignores</span></span><br><span class="line"><span class="string">        self.timeout. If you need to do periodic tasks, do them in</span></span><br><span class="line"><span class="string">        another thread.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.__is_shut_down.clear()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">while</span> <span class="keyword">not</span> self.__shutdown_request:</span><br><span class="line">                <span class="comment"># <span class="doctag">XXX:</span> Consider using another file descriptor or</span></span><br><span class="line">                <span class="comment"># connecting to the socket to wake this up instead of</span></span><br><span class="line">                <span class="comment"># polling. Polling reduces our responsiveness to a</span></span><br><span class="line">                <span class="comment"># shutdown request and wastes cpu at all other times.</span></span><br><span class="line">                r, w, e = _eintr_retry(select.select, [self], [], [],</span><br><span class="line">                                       poll_interval)</span><br><span class="line">                <span class="keyword">if</span> self <span class="keyword">in</span> r:</span><br><span class="line">                    self._handle_request_noblock()</span><br><span class="line"></span><br><span class="line">                self.service_actions()</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            self.__shutdown_request = <span class="literal">False</span></span><br><span class="line">            self.__is_shut_down.set()</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>if self in r:self._handle_request_noblock()</code>如果请求成功进入<code>_handle_request_noblock()</code>函数</p>
+<p>跟进得</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_handle_request_noblock</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""Handle one request, without blocking.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    I assume that select.select has returned that the socket is</span></span><br><span class="line"><span class="string">    readable before this function was called, so there should be</span></span><br><span class="line"><span class="string">    no risk of blocking in get_request().</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        request, client_address = self.get_request()</span><br><span class="line">    <span class="keyword">except</span> socket.error:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> self.verify_request(request, client_address):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.process_request(request, client_address)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            self.handle_error(request, client_address)</span><br><span class="line">            self.shutdown_request(request)</span><br></pre></td></tr></table></figure>
+
+<p>这里调用<code>get_request()</code>函数得到请求，这个函数会pass,同时后面调用了<code>process_request()</code>函数处理请求，跟进得</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, client_address)</span>:</span></span><br><span class="line">        <span class="string">"""Call finish_request.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Overridden by ForkingMixIn and ThreadingMixIn.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.finish_request(request, client_address)</span><br><span class="line">        self.shutdown_request(request)</span><br></pre></td></tr></table></figure>
+
+<p>先调用<code>finish_request()</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">finish_request</span><span class="params">(self, request, client_address)</span>:</span></span><br><span class="line">        <span class="string">"""Finish one request by instantiating RequestHandlerClass."""</span></span><br><span class="line">        self.RequestHandlerClass(request, client_address, self)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WSGIRequestHandler</span><span class="params">(BaseHTTPRequestHandler)</span>:</span>//werkzeug的serving.py</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseHTTPRequestHandler</span><span class="params">(socketserver.StreamRequestHandler)</span>:</span>//</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StreamRequestHandler</span><span class="params">(BaseRequestHandler)</span>:</span> ／／socketserver.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">finish_request方法中执行了self.RequestHandlerClass(request, client_address, self)</span><br><span class="line">self.RequestHandlerClass = RequestHandlerClass（就在__init__方法中）。所以finish_request方法本质上就是创建了一个服务处理实例,当我们创建服务处理类实例时，就会运行handle()方法，而handle()方法则一般是我们处理事务逻辑的代码块。</span><br></pre></td></tr></table></figure>
+
+<h4 id="四-在此回到werkzeug的serving-py"><a href="#四-在此回到werkzeug的serving-py" class="headerlink" title="四.在此回到werkzeug的serving.py"></a>四.在此回到werkzeug的serving.py</h4><p>进入werkzeug的handle函数得</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Handles a request ignoring dropped connections."""</span></span><br><span class="line">        rv = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            rv = BaseHTTPRequestHandler.handle(self)</span><br><span class="line">        <span class="keyword">except</span> (socket.error, socket.timeout) <span class="keyword">as</span> e:</span><br><span class="line">            self.connection_dropped(e)</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">if</span> self.server.ssl_context <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> <span class="keyword">not</span> is_ssl_error():</span><br><span class="line">                <span class="keyword">raise</span></span><br><span class="line">        <span class="keyword">if</span> self.server.shutdown_signal:</span><br><span class="line">            self.initiate_shutdown()</span><br><span class="line">        <span class="keyword">return</span> rv</span><br></pre></td></tr></table></figure>
+
+<p>调用了<code>BaseHTTPRequestHandler.handle(self)</code>,进入得</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self)</span>:</span></span><br><span class="line">       <span class="string">"""Handle multiple requests if necessary."""</span></span><br><span class="line">       self.close_connection = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">       self.handle_one_request()</span><br><span class="line">       <span class="keyword">while</span> <span class="keyword">not</span> self.close_connection:</span><br><span class="line">           self.handle_one_request()</span><br></pre></td></tr></table></figure>
+
+<p>调用了<code>handle_one_request()</code>该方法重写跳一步回到werkzeug的该函数中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_one_request</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Handle a single HTTP request."""</span></span><br><span class="line">        self.raw_requestline = self.rfile.readline()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.raw_requestline:</span><br><span class="line">            self.close_connection = <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> self.parse_request():</span><br><span class="line">            <span class="keyword">return</span> self.run_wsgi()</span><br></pre></td></tr></table></figure>
+
+<p>调用了<code>run_wsgi()</code>函数，该函数内部进行写和开始回复请求等函数，同时还有一个<code>execute()</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute</span><span class="params">(app)</span>:</span></span><br><span class="line">            application_iter = app(environ, start_response)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">for</span> data <span class="keyword">in</span> application_iter:</span><br><span class="line">                    write(data)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> headers_sent:</span><br><span class="line">                    write(<span class="string">b''</span>)</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                <span class="keyword">if</span> hasattr(application_iter, <span class="string">'close'</span>):</span><br><span class="line">                    application_iter.close()</span><br><span class="line">                application_iter = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<p>execute函数中通过application_iter = app(environ, start_response)调用了Flask应用实例app,最后实际执行为<code>__call__</code>函数，最后<code>__call__</code>函数上,该函数最后一句，调用wsgi_app函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> self.wsgi_app(environ, start_response)</span><br></pre></td></tr></table></figure>
+
+<p><code>wsgi_app</code>函数中有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将environ参数放入request_context中开始创建请求上下文函数</span></span><br><span class="line">    <span class="comment">#上诉函数实际即为压栈操作</span></span><br><span class="line">    <span class="keyword">with</span> self.request_context(environ):</span><br><span class="line">        rv = self.preprocess_request()<span class="comment">#预处理请求</span></span><br><span class="line">        <span class="keyword">if</span> rv <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            rv = self.dispatch_request()<span class="comment">#分发处理请求，得到对应编写函数的结果</span></span><br><span class="line">        response = self.make_response(rv)<span class="comment">#将结果指定到制造返回的函数中</span></span><br><span class="line">        response = self.process_response(response)</span><br><span class="line">        <span class="keyword">return</span> response(environ, start_response)</span><br></pre></td></tr></table></figure>
+
+<p>其中在dispatch_request()中这句尤为关键,其函数中有：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> self.view_functions[endpoint](**values)<span class="comment">#通过endpoint找到对应的函数然后就是运行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03.总结"></a>0x03.总结</h2><p>看代码还是舒服😌，但是不排除有错误…</p>
+<p><img src="http://myndtt.github.io/images/56.png" alt="ok"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
+        <p><span>发布时间:</span>2018-01-22, 13:50:17</p>
+        <p><span>最后更新:</span>2019-09-22, 13:04:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/22/flask-v0-1源码简单分析/" title="flask v0.1源码简单分析">https://myndtt.github.io/2018/01/22/flask-v0-1源码简单分析/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2018/01/22/flask-v0-1源码简单分析/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/01/30/scrapy-浅分析-一/">
+                    scrapy 浅分析(一)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/01/17/无题-一/">
+                    无题（一）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00.前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-获取"><span class="toc-number">2.</span> <span class="toc-text">0x01.获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-简要分析"><span class="toc-number">3.</span> <span class="toc-text">0x02.简要分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-包"><span class="toc-number">3.1.</span> <span class="toc-text">1.包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-上下文"><span class="toc-number">3.2.</span> <span class="toc-text">2.上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-简单流程"><span class="toc-number">3.3.</span> <span class="toc-text">3.简单流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一-app-Flask-name"><span class="toc-number">3.3.1.</span> <span class="toc-text">一.app=Flask(__name__)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二-app-run"><span class="toc-number">3.3.2.</span> <span class="toc-text">二.app.run()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三-进入socketserver-py"><span class="toc-number">3.3.3.</span> <span class="toc-text">三.进入socketserver.py</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四-在此回到werkzeug的serving-py"><span class="toc-number">3.3.4.</span> <span class="toc-text">四.在此回到werkzeug的serving.py</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-总结"><span class="toc-number">4.</span> <span class="toc-text">0x03.总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"flask v0.1源码简单分析　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2148375';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/01/30/scrapy-浅分析-一/" title="上一篇: scrapy 浅分析(一)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/01/17/无题-一/" title="下一篇: 无题（一）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 myndtt
+            </div>
+            <div class="footer-right">
+                <a href="#" target="_blank" >没有你的天堂...</a> <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

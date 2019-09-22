@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="myndtt">
+
+
+
+<meta name="description" content="一：PHP的数组问题 123456789101112131415161718192021222324252627282930 &amp;lt;?php/******************************************************************* * PHP Challenge 2015 ***************************************">
+<meta name="keywords" content="audit,记录,php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php两道题">
+<meta property="og:url" content="https://myndtt.github.io/2017/09/20/php两道题/index.html">
+<meta property="og:site_name" content="myndtt || blog">
+<meta property="og:description" content="一：PHP的数组问题 123456789101112131415161718192021222324252627282930 &amp;lt;?php/******************************************************************* * PHP Challenge 2015 ***************************************">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-22T05:04:46.313Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php两道题">
+<meta name="twitter:description" content="一：PHP的数组问题 123456789101112131415161718192021222324252627282930 &amp;lt;?php/******************************************************************* * PHP Challenge 2015 ***************************************">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="myndtt || blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/images/1.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>php两道题 | myndtt || blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/images/1.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">myndtt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">从天堂到彼界 路过人间</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.sec-wiki.com/">sec-wiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.myh0st.cn/">myh0st</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.leavesongs.com/">大P神</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.laruence.com/">风神(风雪之隅)</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yulegeyu.com/">雨师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://momomoxiaoxi.com/">小西师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://lorexxar.cn/">LoRexxar</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yqxiaojunjie.com/">乐清师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://0x48.pw/">Hcamael</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://chybeta.github.io/">Chybeta</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/lcamry">lcamry</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.lynahex.com/">lynahex</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy/">柠檬师傅</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">小菜鸡 奋斗中...</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>   
+   	 <div id="circle"></div>
+		<div id="circletext"><strong style="font-size: 12px;"><a>词不达意</a></strong></div>
+		<div id="circle1"></div>             
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">myndtt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/images/1.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">myndtt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">从天堂到彼界 路过人间</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-php两道题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/20/php两道题/" class="article-date">
+      <time datetime="2017-09-19T16:25:37.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      php两道题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/audit/">audit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>一：PHP的数组问题</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*******************************************************************</span></span><br><span class="line"><span class="comment"> * PHP Challenge 2015</span></span><br><span class="line"><span class="comment"> *******************************************************************</span></span><br><span class="line"><span class="comment"> * Why leave all the fun to the XSS crowd?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Do you know PHP?</span></span><br><span class="line"><span class="comment"> * And are you up to date with all its latest peculiarities?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Are you sure?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If you believe you do then solve this challenge and create an</span></span><br><span class="line"><span class="comment"> * input that will make the following code believe you are the ADMIN.</span></span><br><span class="line"><span class="comment"> * Becoming any other user is not good enough, but a first step.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Attention this code is installed on a Mac OS X 10.9 system</span></span><br><span class="line"><span class="comment"> * that is running PHP 5.4.30 !!!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * TIPS: OS X is mentioned because OS X never runs latest PHP</span></span><br><span class="line"><span class="comment"> *       Challenge will not work with latest PHP</span></span><br><span class="line"><span class="comment"> *       Also challenge will only work on 64bit systems</span></span><br><span class="line"><span class="comment"> *       To solve challenge you need to combine what a normal</span></span><br><span class="line"><span class="comment"> *       attacker would do when he sees this code with knowledge</span></span><br><span class="line"><span class="comment"> *       about latest known PHP quirks</span></span><br><span class="line"><span class="comment"> *       And you cannot bruteforce the admin password directly.</span></span><br><span class="line"><span class="comment"> *       To give you an idea - first half is:</span></span><br><span class="line"><span class="comment"> *          orewgfpeowöfgphewoöfeiuwgöpuerhjwfiuvuger</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If you know the answer please submit it to info<span class="doctag">@sektioneins</span>.de</span></span><br><span class="line"><span class="comment"> ********************************************************************/</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">$users = <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">"0:9b5c3d2b64b8f74e56edec71462bd97a"</span> ,</span><br><span class="line">        <span class="string">"1:4eb5fb1501102508a86971773849d266"</span>,</span><br><span class="line">        <span class="string">"2:facabd94d57fc9f1e655ef9ce891e86e"</span>,</span><br><span class="line">        <span class="string">"3:ce3924f011fe323df3a6a95222b0c909"</span>,</span><br><span class="line">        <span class="string">"4:7f6618422e6a7ca2e939bd83abde402c"</span>,</span><br><span class="line">        <span class="string">"5:06e2b745f3124f7d670f78eabaa94809"</span>,</span><br><span class="line">        <span class="string">"6:8e39a6e40900bb0824a8e150c0d0d59f"</span>,</span><br><span class="line">        <span class="string">"7:d035e1a80bbb377ce1edce42728849f2"</span>,</span><br><span class="line">        <span class="string">"8:0927d64a71a9d0078c274fc5f4f10821"</span>,</span><br><span class="line">        <span class="string">"9:e2e23d64a642ee82c7a270c6c76df142"</span>,</span><br><span class="line">        <span class="string">"10:70298593dd7ada576aff61b6750b9118"</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$valid_user = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">$input = $_COOKIE[<span class="string">'user'</span>];</span><br><span class="line">$input[<span class="number">1</span>] = md5($input[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($users <span class="keyword">as</span> $user)</span><br><span class="line">&#123;</span><br><span class="line">        $user = explode(<span class="string">":"</span>, $user);</span><br><span class="line">        <span class="keyword">if</span> ($input === $user) &#123;</span><br><span class="line">                $uid = $input[<span class="number">0</span>] + <span class="number">0</span>;</span><br><span class="line">                $valid_user = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!$valid_user) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"not a valid user\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($uid == <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Hello Admin How can I serve you today?\n"</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"SECRETS ....\n"</span>;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Welcome back user\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这道题，这个栗子算是比较老了的，主要涉及的知识就是</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Description:</span><br><span class="line">------------</span><br><span class="line">var<span class="emphasis">_dump([0 =&gt; 0] === [0x100000000 =&gt; 0]); // bool(true)</span></span><br></pre></td></tr></table></figure>
+
+<p>当然这是跟PHP版本有关系</p>
+<p>具体可以看<a href="http://www.sektioneins.de/blog/15-08-03-php_challenge_2015_solution.html" target="_blank" rel="noopener">http://www.sektioneins.de/blog/15-08-03-php_challenge_2015_solution.html</a></p>
+<p>二：<a href="http://solveme.safflower.kr/prob/name_check" target="_blank" rel="noopener">http://solveme.safflower.kr/prob/name_check</a></p>
+<p>这道题十分有意思，我其实想了很久，突然突发奇想才想出来的</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span>.<span class="string">'/lib.php'</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'name'</span>]))&#123;</span><br><span class="line"></span><br><span class="line">    $name = $_GET[<span class="string">'name'</span>];</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/admin|--|;|\(\)|\/\*|\\0/i"</span>, $name))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'Not allowed input'</span>;</span><br><span class="line">        <span class="keyword">goto</span> quit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $sql = <span class="keyword">new</span> SQLite3(<span class="string">'name_check.db'</span>, SQLITE3_OPEN_READWRITE);</span><br><span class="line">    $res = $sql-&amp;gt;query(<span class="string">"</span></span><br><span class="line"><span class="string">        SELECT </span></span><br><span class="line"><span class="string">        MAX('0','1','&#123;$name&#125;') LIKE 'a%', </span></span><br><span class="line"><span class="string">        INSTR('&#123;$name&#125;','d')&amp;gt;0, </span></span><br><span class="line"><span class="string">        MIN('&#123;$name&#125;','b','c') LIKE '__m__', </span></span><br><span class="line"><span class="string">        SUBSTR('&#123;$name&#125;',-2)='in'</span></span><br><span class="line"><span class="string">    ;"</span>);</span><br><span class="line">    <span class="keyword">if</span>($res === <span class="keyword">false</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'Database error'</span>;</span><br><span class="line">        <span class="keyword">goto</span> quit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $row = $res-&amp;gt;fetchArray(SQLITE3_NUM);</span><br><span class="line">    <span class="keyword">if</span>(</span><br><span class="line">        $row[<span class="number">0</span>] + $row[<span class="number">1</span>] + $row[<span class="number">2</span>] + $row[<span class="number">3</span>] !== <span class="number">4</span> ||</span><br><span class="line">        array_sum($row) !== <span class="number">4</span> </span><br><span class="line">    )&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'Auth failed'</span>;</span><br><span class="line">        <span class="keyword">goto</span> quit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> $flag;</span><br><span class="line"></span><br><span class="line">quit:</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'&amp;lt;hr&amp;gt;'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);&lt;/pre&gt;</span><br></pre></td></tr></table></figure>
+
+<p>代码十分有趣，按照代码来，我们需要select 1,1,1,1；四个1出来才能满足结果，也即下面代码每一行为真</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MAX(<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'&#123;$name&#125;'</span>) LIKE <span class="string">'a%'</span>, </span><br><span class="line">INSTR(<span class="string">'&#123;$name&#125;'</span>,<span class="string">'d'</span>)&amp;gt;<span class="number">0</span>, </span><br><span class="line">MIN(<span class="string">'&#123;$name&#125;'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>) LIKE <span class="string">'__m__'</span>, </span><br><span class="line">SUBSTR(<span class="string">'&#123;$name&#125;'</span>,<span class="number">-2</span>)=<span class="string">'in'</span></span><br></pre></td></tr></table></figure>
+
+<p>第一行意思为你第一个必须以a开头</p>
+<p>第二行就是你输入的需要有d</p>
+<p>第三行就是输入的是xxmxx（xx为任意字符，中间是字符m）</p>
+<p>第四行就是字符以in结尾</p>
+<p>这摆明着要叫我们输入admin啊，可惜前面的正则残酷的将其过滤。</p>
+<p>查看了文档，想过很多种方法，今天突发奇想 ||，这在sqlite中是一个字符连接的，代码的正则中没有将其过滤，也没有过滤’,所以最后就是<a href="http://solveme.safflower.kr/prob/name_check/?name=ad%27||%27min" target="_blank" rel="noopener">http://solveme.safflower.kr/prob/name_check/?name=ad%27||%27min</a></p>
+<p>出来结果。这个网站题目有点意思。再接再厉（简单的题目就不说了）</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/09/20/php两道题/">php两道题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
+        <p><span>发布时间:</span>2017-09-20, 00:25:37</p>
+        <p><span>最后更新:</span>2019-09-22, 13:04:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/20/php两道题/" title="php两道题">https://myndtt.github.io/2017/09/20/php两道题/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2017/09/20/php两道题/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/10/22/url中的下划线/">
+                    url中的下划线
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/09/19/某年某月的某一天/">
+                    某年某月的某一天
+                </a>
+            </div>
+        
+    </nav>
+
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"php两道题　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2148375';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/22/url中的下划线/" title="上一篇: url中的下划线">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/09/19/某年某月的某一天/" title="下一篇: 某年某月的某一天">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 myndtt
+            </div>
+            <div class="footer-right">
+                <a href="#" target="_blank" >没有你的天堂...</a> <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

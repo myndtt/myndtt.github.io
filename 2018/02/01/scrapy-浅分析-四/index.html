@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="myndtt">
+
+
+
+<meta name="description" content="0x00.前言前面一 前面二 前面三 这次接着上回要提到下载的地方 123456789101112131415161718192021def _next_request_from_scheduler(self, spider):        slot = self.slot        request = slot.scheduler.next_request()        if not">
+<meta name="keywords" content="python,scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrapy 浅分析(四)">
+<meta property="og:url" content="https://myndtt.github.io/2018/02/01/scrapy-浅分析-四/index.html">
+<meta property="og:site_name" content="myndtt || blog">
+<meta property="og:description" content="0x00.前言前面一 前面二 前面三 这次接着上回要提到下载的地方 123456789101112131415161718192021def _next_request_from_scheduler(self, spider):        slot = self.slot        request = slot.scheduler.next_request()        if not">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://myndtt.com/images/58.png">
+<meta property="og:updated_time" content="2019-09-22T05:04:46.320Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrapy 浅分析(四)">
+<meta name="twitter:description" content="0x00.前言前面一 前面二 前面三 这次接着上回要提到下载的地方 123456789101112131415161718192021def _next_request_from_scheduler(self, spider):        slot = self.slot        request = slot.scheduler.next_request()        if not">
+<meta name="twitter:image" content="http://myndtt.com/images/58.png">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="myndtt || blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/images/1.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>scrapy 浅分析(四) | myndtt || blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/images/1.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">myndtt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">从天堂到彼界 路过人间</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.sec-wiki.com/">sec-wiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.myh0st.cn/">myh0st</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.leavesongs.com/">大P神</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.laruence.com/">风神(风雪之隅)</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yulegeyu.com/">雨师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://momomoxiaoxi.com/">小西师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://lorexxar.cn/">LoRexxar</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yqxiaojunjie.com/">乐清师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://0x48.pw/">Hcamael</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://chybeta.github.io/">Chybeta</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/lcamry">lcamry</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.lynahex.com/">lynahex</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy/">柠檬师傅</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">小菜鸡 奋斗中...</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>   
+   	 <div id="circle"></div>
+		<div id="circletext"><strong style="font-size: 12px;"><a>词不达意</a></strong></div>
+		<div id="circle1"></div>             
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">myndtt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/images/1.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">myndtt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">从天堂到彼界 路过人间</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-scrapy-浅分析-四" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/02/01/scrapy-浅分析-四/" class="article-date">
+      <time datetime="2018-02-01T11:45:11.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      scrapy 浅分析(四)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/">scrapy</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h1><p><a href="http://myndtt.com/2018/01/30/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%80/" target="_blank" rel="noopener">前面一</a></p>
+<p><a href="http://myndtt.com/2018/01/31/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%BA%8C/" target="_blank" rel="noopener">前面二</a></p>
+<p><a href="http://myndtt.com/2018/02/01/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%89/" target="_blank" rel="noopener">前面三</a></p>
+<p>这次接着上回要提到下载的地方</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_next_request_from_scheduler</span><span class="params">(self, spider)</span>:</span></span><br><span class="line">        slot = self.slot</span><br><span class="line">        request = slot.scheduler.next_request()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> request:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#去下载</span></span><br><span class="line">        d = self._download(request, spider)</span><br><span class="line">        <span class="comment">#处理下载返回结果</span></span><br><span class="line">        d.addBoth(self._handle_downloader_output, request, spider)</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.info(<span class="string">'Error while handling downloader output'</span>,</span><br><span class="line">                                           exc_info=failure_to_exc_info(f),</span><br><span class="line">                                           extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        d.addBoth(<span class="keyword">lambda</span> _: slot.remove_request(request))</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.info(<span class="string">'Error while removing request from slot'</span>,</span><br><span class="line">                                           exc_info=failure_to_exc_info(f),</span><br><span class="line">                                           extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        d.addBoth(<span class="keyword">lambda</span> _: slot.nextcall.schedule())</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.info(<span class="string">'Error while scheduling new request'</span>,</span><br><span class="line">                                           exc_info=failure_to_exc_info(f),</span><br><span class="line">                                           extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>列出相关函数得</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_download</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        slot = self.slot</span><br><span class="line">        slot.add_request(request)</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_on_success</span><span class="params">(response)</span>:</span></span><br><span class="line">           <span class="comment">#成功返回</span></span><br><span class="line">            <span class="keyword">assert</span> isinstance(response, (Response, Request))</span><br><span class="line">            <span class="comment">#返回的是response则执行如下操作</span></span><br><span class="line">            <span class="keyword">if</span> isinstance(response, Response):</span><br><span class="line">                response.request = request <span class="comment"># tie request to response received</span></span><br><span class="line">                logkws = self.logformatter.crawled(request, response, spider)</span><br><span class="line">                logger.log(*logformatter_adapter(logkws), extra=&#123;<span class="string">'spider'</span>: spider&#125;)</span><br><span class="line">                self.signals.send_catch_log(signal=signals.response_received, \</span><br><span class="line">                    response=response, request=request, spider=spider)</span><br><span class="line">            <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_on_complete</span><span class="params">(_)</span>:</span></span><br><span class="line">          <span class="comment">#完成后进行下一次</span></span><br><span class="line">            slot.nextcall.schedule()</span><br><span class="line">            <span class="keyword">return</span> _</span><br><span class="line">		<span class="comment">#去执行那个downloader的函数</span></span><br><span class="line">        dwld = self.downloader.fetch(request, spider)</span><br><span class="line">        <span class="comment">#回调到上面那个函数</span></span><br><span class="line">        dwld.addCallbacks(_on_success)</span><br><span class="line">        <span class="comment">#回调到上面那个函数</span></span><br><span class="line">        dwld.addBoth(_on_complete)</span><br><span class="line">        <span class="keyword">return</span> dwld</span><br></pre></td></tr></table></figure>
+
+<p>更进<code>fetch</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_deactivate</span><span class="params">(response)</span>:</span></span><br><span class="line">      		<span class="comment">#删除这个request</span></span><br><span class="line">            self.active.remove(request)</span><br><span class="line">            <span class="keyword">return</span> response</span><br><span class="line">		<span class="comment">#加入该request</span></span><br><span class="line">        self.active.add(request)</span><br><span class="line">        <span class="comment">#调用下载的中间件，回调到_enqueue_request函数</span></span><br><span class="line">        dfd = self.middleware.download(self._enqueue_request, request, spider)</span><br><span class="line">        <span class="comment">#最后调用上面那个函数也就是删除操作</span></span><br><span class="line">        <span class="keyword">return</span> dfd.addBoth(_deactivate)</span><br></pre></td></tr></table></figure>
+
+<p>OK，进入<code>download</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(self, download_func, request, spider)</span>:</span></span><br><span class="line"><span class="meta">        @defer.inlineCallbacks</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(request)</span>:</span></span><br><span class="line">        <span class="comment">#按字面意思来如果中间件有这个方法就执行</span></span><br><span class="line">        <span class="comment">#这里需要说明request，response，下载器要对调度器的请求和下载后的返回结果进行不同对待</span></span><br><span class="line">            <span class="keyword">for</span> method <span class="keyword">in</span> self.methods[<span class="string">'process_request'</span>]:</span><br><span class="line">                response = <span class="keyword">yield</span> method(request=request, spider=spider)</span><br><span class="line">                <span class="keyword">assert</span> response <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> isinstance(response, (Response, Request)), \</span><br><span class="line">                        <span class="string">'Middleware %s.process_request must return None, Response or Request, got %s'</span> % \</span><br><span class="line">                        (six.get_method_self(method).__class__.__name__, response.__class__.__name__)</span><br><span class="line">                <span class="keyword">if</span> response:</span><br><span class="line">                    defer.returnValue(response)</span><br><span class="line">             <span class="comment">#否则执行download_func,这个就是传进来的self._enqueue_request</span></span><br><span class="line">            defer.returnValue((<span class="keyword">yield</span> download_func(request=request,spider=spider)))</span><br><span class="line"></span><br><span class="line"><span class="meta">        @defer.inlineCallbacks</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">process_response</span><span class="params">(response)</span>:</span></span><br><span class="line">        <span class="comment">#按字面意思来如果中间件有这个方法就执行，后面同理</span></span><br><span class="line">            <span class="keyword">assert</span> response <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>, <span class="string">'Received None in process_response'</span></span><br><span class="line">            <span class="keyword">if</span> isinstance(response, Request):</span><br><span class="line">                defer.returnValue(response)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> method <span class="keyword">in</span> self.methods[<span class="string">'process_response'</span>]:</span><br><span class="line">                response = <span class="keyword">yield</span> method(request=request, response=response,</span><br><span class="line">                                        spider=spider)</span><br><span class="line">                <span class="keyword">assert</span> isinstance(response, (Response, Request)), \</span><br><span class="line">                    <span class="string">'Middleware %s.process_response must return Response or Request, got %s'</span> % \</span><br><span class="line">                    (six.get_method_self(method).__class__.__name__, type(response))</span><br><span class="line">                <span class="keyword">if</span> isinstance(response, Request):</span><br><span class="line">                    defer.returnValue(response)</span><br><span class="line">            defer.returnValue(response)</span><br><span class="line"></span><br><span class="line"><span class="meta">        @defer.inlineCallbacks</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">process_exception</span><span class="params">(_failure)</span>:</span></span><br><span class="line">            exception = _failure.value</span><br><span class="line">            <span class="keyword">for</span> method <span class="keyword">in</span> self.methods[<span class="string">'process_exception'</span>]:</span><br><span class="line">                response = <span class="keyword">yield</span> method(request=request, exception=exception,</span><br><span class="line">                                        spider=spider)</span><br><span class="line">                <span class="keyword">assert</span> response <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> isinstance(response, (Response, Request)), \</span><br><span class="line">                    <span class="string">'Middleware %s.process_exception must return None, Response or Request, got %s'</span> % \</span><br><span class="line">                    (six.get_method_self(method).__class__.__name__, type(response))</span><br><span class="line">                <span class="keyword">if</span> response:</span><br><span class="line">                    defer.returnValue(response)</span><br><span class="line">            defer.returnValue(_failure)</span><br><span class="line">		</span><br><span class="line">        deferred = mustbe_deferred(process_request, request)</span><br><span class="line">        <span class="comment">#差错检测</span></span><br><span class="line">        deferred.addErrback(process_exception)</span><br><span class="line">        <span class="comment">#进行回调</span></span><br><span class="line">        deferred.addCallback(process_response)</span><br><span class="line">        <span class="keyword">return</span> deferred</span><br></pre></td></tr></table></figure>
+
+<p>等于说下载时，对request进行一些中间件操作，操作完以后进入<code>_enqueue_request</code>函数，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_enqueue_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        key, slot = self._get_slot(request, spider)</span><br><span class="line">        request.meta[<span class="string">'download_slot'</span>] = key</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_deactivate</span><span class="params">(response)</span>:</span></span><br><span class="line">            slot.active.remove(request)</span><br><span class="line">            <span class="keyword">return</span> response</span><br><span class="line">		</span><br><span class="line">        slot.active.add(request)</span><br><span class="line">        deferred = defer.Deferred().addBoth(_deactivate)</span><br><span class="line">        <span class="comment">#加入下载队列</span></span><br><span class="line">        slot.queue.append((request, deferred))</span><br><span class="line">        <span class="comment">#处理队列</span></span><br><span class="line">        self._process_queue(spider, slot)</span><br><span class="line">        <span class="keyword">return</span> deferred</span><br></pre></td></tr></table></figure>
+
+<p>跟进<code>_process_queue</code>,相关函数也一并列出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_process_queue</span><span class="params">(self, spider, slot)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> slot.latercall <span class="keyword">and</span> slot.latercall.active():</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Delay queue processing if a download_delay is configured</span></span><br><span class="line">        now = time()</span><br><span class="line">        delay = slot.download_delay()</span><br><span class="line">        <span class="keyword">if</span> delay:</span><br><span class="line">            penalty = delay - now + slot.lastseen</span><br><span class="line">            <span class="keyword">if</span> penalty &gt; <span class="number">0</span>:</span><br><span class="line">                slot.latercall = reactor.callLater(penalty, self._process_queue, spider, slot)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Process enqueued requests if there are free slots to transfer for this slot</span></span><br><span class="line">        <span class="keyword">while</span> slot.queue <span class="keyword">and</span> slot.free_transfer_slots() &gt; <span class="number">0</span>:</span><br><span class="line">            slot.lastseen = now</span><br><span class="line">            request, deferred = slot.queue.popleft()</span><br><span class="line">            <span class="comment">#开始真正下载</span></span><br><span class="line">            dfd = self._download(slot, request, spider)</span><br><span class="line">            dfd.chainDeferred(deferred)</span><br><span class="line">            <span class="comment"># prevent burst if inter-request delays were configured</span></span><br><span class="line">            <span class="keyword">if</span> delay:</span><br><span class="line">                self._process_queue(spider, slot)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_download</span><span class="params">(self, slot, request, spider)</span>:</span></span><br><span class="line">        <span class="comment"># The order is very important for the following deferreds. Do not change!</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 1. Create the download deferred</span></span><br><span class="line">      <span class="comment">#注册handlers下的download_request方法</span></span><br><span class="line">        dfd = mustbe_deferred(self.handlers.download_request, request, spider)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 2. Notify response_downloaded listeners about the recent download</span></span><br><span class="line">        <span class="comment"># before querying queue for next request</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_downloaded</span><span class="params">(response)</span>:</span></span><br><span class="line">            self.signals.send_catch_log(signal=signals.response_downloaded,</span><br><span class="line">                                        response=response,</span><br><span class="line">                                        request=request,</span><br><span class="line">                                        spider=spider)</span><br><span class="line">            <span class="comment">#调用后返回</span></span><br><span class="line">            <span class="keyword">return</span> response</span><br><span class="line">         <span class="comment">#注册好了就调用</span></span><br><span class="line">        dfd.addCallback(_downloaded)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 3. After response arrives,  remove the request from transferring</span></span><br><span class="line">        <span class="comment"># state to free up the transferring slot so it can be used by the</span></span><br><span class="line">        <span class="comment"># following requests (perhaps those which came from the downloader</span></span><br><span class="line">        <span class="comment"># middleware itself)</span></span><br><span class="line">        slot.transferring.add(request)</span><br><span class="line">		<span class="comment">#结束后的操作</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">finish_transferring</span><span class="params">(_)</span>:</span></span><br><span class="line">            slot.transferring.remove(request)</span><br><span class="line">            <span class="comment">#处理队列</span></span><br><span class="line">            self._process_queue(spider, slot)</span><br><span class="line">            <span class="keyword">return</span> _</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dfd.addBoth(finish_transferring)</span><br></pre></td></tr></table></figure>
+
+<p>官方注释的很清楚啊！！先跟进<code>download_request</code>方法，列出相关函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">  		<span class="comment">#获取scheme，也就是连接是什么http,https,ftp之类的</span></span><br><span class="line">        scheme = urlparse_cached(request).scheme</span><br><span class="line">      <span class="comment">#不同的schema返回不同</span></span><br><span class="line">        handler = self._get_handler(scheme)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> handler:</span><br><span class="line">            <span class="keyword">raise</span> NotSupported(<span class="string">"Unsupported URL scheme '%s': %s"</span> %</span><br><span class="line">                               (scheme, self._notconfigured[scheme]))</span><br><span class="line">            <span class="comment">#ok去吧去 下载吧！！</span></span><br><span class="line">        <span class="keyword">return</span> handler.download_request(request, spider)</span><br><span class="line"><span class="comment">#下载就不进去了</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        p = urlparse_cached(request)</span><br><span class="line">        scheme = <span class="string">'https'</span> <span class="keyword">if</span> request.meta.get(<span class="string">'is_secure'</span>) <span class="keyword">else</span> <span class="string">'http'</span></span><br><span class="line">        bucket = p.hostname</span><br><span class="line">        path = p.path + <span class="string">'?'</span> + p.query <span class="keyword">if</span> p.query <span class="keyword">else</span> p.path</span><br><span class="line">        url = <span class="string">'%s://%s.s3.amazonaws.com%s'</span> % (scheme, bucket, path)</span><br><span class="line">        <span class="keyword">if</span> self.anon:</span><br><span class="line">            request = request.replace(url=url)</span><br><span class="line">        <span class="keyword">elif</span> self._signer <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">import</span> botocore.awsrequest</span><br><span class="line">            awsrequest = botocore.awsrequest.AWSRequest(</span><br><span class="line">                method=request.method,</span><br><span class="line">                url=<span class="string">'%s://s3.amazonaws.com/%s%s'</span> % (scheme, bucket, path),</span><br><span class="line">                headers=request.headers.to_unicode_dict(),</span><br><span class="line">                data=request.body)</span><br><span class="line">            self._signer.add_auth(awsrequest)</span><br><span class="line">            request = request.replace(</span><br><span class="line">                url=url, headers=awsrequest.headers.items())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            signed_headers = self.conn.make_request(</span><br><span class="line">                    method=request.method,</span><br><span class="line">                    bucket=bucket,</span><br><span class="line">                    key=unquote(p.path),</span><br><span class="line">                    query_args=unquote(p.query),</span><br><span class="line">                    headers=request.headers,</span><br><span class="line">                    data=request.body)</span><br><span class="line">            request = request.replace(url=url, headers=signed_headers)</span><br><span class="line">        <span class="keyword">return</span> self._download_http(request, spider)</span><br></pre></td></tr></table></figure>
+
+<p>下载这里就结束，回到最上面提到的处理下载返回结果那里，那里调用<code>self._handle_downloader_output</code>函数，在这里官方框架的第四五步结束了。以下对返回的结果进行分别对待，进行不同操作。后面官方架构步骤就会都完成。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_handle_downloader_output</span><span class="params">(self, response, request, spider)</span>:</span></span><br><span class="line">  <span class="comment">#三种结果选一种</span></span><br><span class="line">        <span class="keyword">assert</span> isinstance(response, (Request, Response, Failure)), response</span><br><span class="line">        <span class="comment"># downloader middleware can return requests (for example, redirects)</span></span><br><span class="line">      <span class="comment">#如果response是Request则再次调用该方法进入调度器，就是说的URL在此进入队列继续。</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(response, Request):</span><br><span class="line">            self.crawl(response, spider)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment"># response is a Response or Failure</span></span><br><span class="line">        d = self.scraper.enqueue_scrape(response, request, spider)</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.error(<span class="string">'Error while enqueuing downloader output'</span>,</span><br><span class="line">                                            exc_info=failure_to_exc_info(f),</span><br><span class="line">                                            extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+
+<p>同理官方注释很清楚。这回进入<code>enqueue_scrape</code>函数，列出相关函数，<code>函数不一定在一个文件里面</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Slot</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""Scraper slot (one per running spider)"""</span></span><br><span class="line"></span><br><span class="line">    MIN_RESPONSE_SIZE = <span class="number">1024</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, max_active_size=<span class="number">5000000</span>)</span>:</span></span><br><span class="line">        self.max_active_size = max_active_size</span><br><span class="line">        self.queue = deque()</span><br><span class="line">        self.active = set()</span><br><span class="line">        self.active_size = <span class="number">0</span></span><br><span class="line">        self.itemproc_size = <span class="number">0</span></span><br><span class="line">        self.closing = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_response_request</span><span class="params">(self, response, request)</span>:</span></span><br><span class="line">        deferred = defer.Deferred()</span><br><span class="line">        <span class="comment">#加入队列</span></span><br><span class="line">        self.queue.append((response, request, deferred))</span><br><span class="line">        <span class="keyword">if</span> isinstance(response, Response):</span><br><span class="line">            self.active_size += max(len(response.body), self.MIN_RESPONSE_SIZE)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.active_size += self.MIN_RESPONSE_SIZE</span><br><span class="line">        <span class="keyword">return</span> deferred</span><br><span class="line"></span><br><span class="line"><span class="comment">#该类后面还有</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enqueue_scrape</span><span class="params">(self, response, request, spider)</span>:</span></span><br><span class="line">        slot = self.slot</span><br><span class="line">        dfd = slot.add_response_request(response, request)</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">finish_scraping</span><span class="params">(_)</span>:</span></span><br><span class="line">            slot.finish_response(response, request)</span><br><span class="line">            self._check_if_closing(spider, slot)</span><br><span class="line">            self._scrape_next(spider, slot)</span><br><span class="line">            <span class="keyword">return</span> _</span><br><span class="line">        dfd.addBoth(finish_scraping)</span><br><span class="line">        dfd.addErrback(</span><br><span class="line">            <span class="keyword">lambda</span> f: logger.error(<span class="string">'Scraper bug processing %(request)s'</span>,</span><br><span class="line">                                   &#123;<span class="string">'request'</span>: request&#125;,</span><br><span class="line">                                   exc_info=failure_to_exc_info(f),</span><br><span class="line">                                   extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        self._scrape_next(spider, slot)</span><br><span class="line">        <span class="keyword">return</span> dfd</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_scrape_next</span><span class="params">(self, spider, slot)</span>:</span></span><br><span class="line">  <span class="comment">#拿出要处理的队列</span></span><br><span class="line">        <span class="keyword">while</span> slot.queue:</span><br><span class="line">            response, request, deferred = slot.next_response_request_deferred()</span><br><span class="line">            self._scrape(response, request, spider).chainDeferred(deferred)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_scrape</span><span class="params">(self, response, request, spider)</span>:</span></span><br><span class="line">        <span class="string">"""Handle the downloaded response or failure through the spider</span></span><br><span class="line"><span class="string">        callback/errback"""</span></span><br><span class="line">        <span class="keyword">assert</span> isinstance(response, (Response, Failure))</span><br><span class="line">		<span class="comment">#进入_scrape2</span></span><br><span class="line">        dfd = self._scrape2(response, request, spider) <span class="comment"># returns spiders processed output</span></span><br><span class="line">        dfd.addErrback(self.handle_spider_error, request, response, spider)</span><br><span class="line">        <span class="comment">#从_scrape2回来后进入`handle_spider_output`</span></span><br><span class="line">        dfd.addCallback(self.handle_spider_output, request, response, spider)</span><br><span class="line">        <span class="keyword">return</span> dfd</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_scrape2</span><span class="params">(self, request_result, request, spider)</span>:</span></span><br><span class="line">        <span class="string">"""Handle the different cases of request's result been a Response or a</span></span><br><span class="line"><span class="string">        Failure"""</span></span><br><span class="line">    	<span class="comment">#进行区分</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(request_result, Failure):</span><br><span class="line">          <span class="comment">#如果是Response类型的调用中间件函数`scrape_response`进行处理，这个传进去call_spider函数</span></span><br><span class="line">            <span class="keyword">return</span> self.spidermw.scrape_response(</span><br><span class="line">                self.call_spider, request_result, request, spider)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># <span class="doctag">FIXME:</span> don't ignore errors in spider middleware</span></span><br><span class="line">            dfd = self.call_spider(request_result, request, spider)</span><br><span class="line">            <span class="keyword">return</span> dfd.addErrback(</span><br><span class="line">                self._log_download_errors, request_result, request, spider)</span><br><span class="line">          </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scrape_response</span><span class="params">(self, scrape_func, response, request, spider)</span>:</span></span><br><span class="line">        fname = <span class="keyword">lambda</span> f:<span class="string">'%s.%s'</span> % (</span><br><span class="line">                six.get_method_self(f).__class__.__name__,</span><br><span class="line">                six.get_method_function(f).__name__)</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">process_spider_input</span><span class="params">(response)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> method <span class="keyword">in</span> self.methods[<span class="string">'process_spider_input'</span>]:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    result = method(response=response, spider=spider)</span><br><span class="line">                    <span class="keyword">assert</span> result <span class="keyword">is</span> <span class="literal">None</span>, \</span><br><span class="line">                            <span class="string">'Middleware %s must returns None or '</span> \</span><br><span class="line">                            <span class="string">'raise an exception, got %s '</span> \</span><br><span class="line">                            % (fname(method), type(result))</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">return</span> scrape_func(Failure(), request, spider)</span><br><span class="line">            <span class="keyword">return</span> scrape_func(response, request, spider)</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">process_spider_exception</span><span class="params">(_failure)</span>:</span></span><br><span class="line">            exception = _failure.value</span><br><span class="line">            <span class="keyword">for</span> method <span class="keyword">in</span> self.methods[<span class="string">'process_spider_exception'</span>]:</span><br><span class="line">                result = method(response=response, exception=exception, spider=spider)</span><br><span class="line">                <span class="keyword">assert</span> result <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> _isiterable(result), \</span><br><span class="line">                    <span class="string">'Middleware %s must returns None, or an iterable object, got %s '</span> % \</span><br><span class="line">                    (fname(method), type(result))</span><br><span class="line">                <span class="keyword">if</span> result <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                    <span class="keyword">return</span> result</span><br><span class="line">            <span class="keyword">return</span> _failure</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">process_spider_output</span><span class="params">(result)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> method <span class="keyword">in</span> self.methods[<span class="string">'process_spider_output'</span>]:</span><br><span class="line">                result = method(response=response, result=result, spider=spider)</span><br><span class="line">                <span class="keyword">assert</span> _isiterable(result), \</span><br><span class="line">                    <span class="string">'Middleware %s must returns an iterable object, got %s '</span> % \</span><br><span class="line">                    (fname(method), type(result))</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        dfd = mustbe_deferred(process_spider_input, response)</span><br><span class="line">        <span class="comment">#差错检测</span></span><br><span class="line">        dfd.addErrback(process_spider_exception)</span><br><span class="line">        <span class="comment">#进行回掉</span></span><br><span class="line">        dfd.addCallback(process_spider_output)</span><br><span class="line">        <span class="keyword">return</span> dfd</span><br></pre></td></tr></table></figure>
+
+<p>先进入<code>call_spider</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">call_spider</span><span class="params">(self, result, request, spider)</span>:</span></span><br><span class="line">        result.request = request</span><br><span class="line">        dfd = defer_result(result)</span><br><span class="line">        <span class="comment">#自己定义的回调否则就是parse函数（我们项目经常写的）</span></span><br><span class="line">        dfd.addCallbacks(request.callback <span class="keyword">or</span> spider.parse, request.errback)</span><br><span class="line">        <span class="comment">#下面这个函数里面就一句话return arg_to_iter(result)</span></span><br><span class="line">        <span class="keyword">return</span> dfd.addCallback(iterate_spider_output)</span><br></pre></td></tr></table></figure>
+
+<p>好的回去进入<code>handle_spider_output</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_spider_output</span><span class="params">(self, result, request, response, spider)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> result:</span><br><span class="line">            <span class="keyword">return</span> defer_succeed(<span class="literal">None</span>)</span><br><span class="line">      <span class="comment">#处理错误</span></span><br><span class="line">        it = iter_errback(result, self.handle_spider_error, request, response, spider)</span><br><span class="line">        <span class="comment">#得嘞又 注册了_process_spidermw_output</span></span><br><span class="line">        dfd = parallel(it, self.concurrent_items,</span><br><span class="line">            self._process_spidermw_output, request, response, spider)</span><br><span class="line">        <span class="keyword">return</span> dfd</span><br></pre></td></tr></table></figure>
+
+<p>进入<code>_process_spidermw_output</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_process_spidermw_output</span><span class="params">(self, output, request, response, spider)</span>:</span></span><br><span class="line">        <span class="string">"""Process each Request/Item (given in the output parameter) returned</span></span><br><span class="line"><span class="string">        from the given spider</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">   		 <span class="comment">#如果是Request，则加入调度器继续</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(output, Request):</span><br><span class="line">            self.crawler.engine.crawl(request=output, spider=spider)</span><br><span class="line">        <span class="keyword">elif</span> isinstance(output, (BaseItem, dict)):</span><br><span class="line">            self.slot.itemproc_size += <span class="number">1</span></span><br><span class="line">            <span class="comment">#调用Pipeline的process_item，你看看你写的项目是不是有这个</span></span><br><span class="line">            dfd = self.itemproc.process_item(output, spider)</span><br><span class="line">            dfd.addBoth(self._itemproc_finished, output, response, spider)</span><br><span class="line">            <span class="keyword">return</span> dfd</span><br><span class="line">        <span class="keyword">elif</span> output <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            typename = type(output).__name__</span><br><span class="line">            logger.error(<span class="string">'Spider must return Request, BaseItem, dict or None, '</span></span><br><span class="line">                         <span class="string">'got %(typename)r in %(request)s'</span>,</span><br><span class="line">                         &#123;<span class="string">'request'</span>: request, <span class="string">'typename'</span>: typename&#125;,</span><br><span class="line">                         extra=&#123;<span class="string">'spider'</span>: spider&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>官方注释可以啊，后面具体细节就不去看了。</p>
+<h1 id="0x02-小结"><a href="#0x02-小结" class="headerlink" title="0x02.小结"></a>0x02.小结</h1><p>这次在全局搜索代码的时候发现好多一样的代码，可想框架很多地方是可以重写的。我们将官方的图补上</p>
+<p><img src="http://myndtt.com/images/58.png" alt="7"></p>
+<p>完成了4，5，6，7，8部分。这回这张图就完美了,引擎将下载结果给<code>蜘蛛</code>做<code>鉴定</code>，不同则进入不同地方。</p>
+<p>scrapy框架看下来很多地方可以重写，但是一环扣一环的，主框架流程不能动。用到了异步，去重等…这么看来其实它也不神秘，但有些小细节我肯定没注意到。说不定错过精彩的地方也不一定，就这样吧..</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
+        <p><span>发布时间:</span>2018-02-01, 19:45:11</p>
+        <p><span>最后更新:</span>2019-09-22, 13:04:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/02/01/scrapy-浅分析-四/" title="scrapy 浅分析(四)">https://myndtt.github.io/2018/02/01/scrapy-浅分析-四/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2018/02/01/scrapy-浅分析-四/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/03/29/无题-二/">
+                    无题(二)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/02/01/scrapy-浅分析-三/">
+                    scrapy 浅分析(三)
+                </a>
+            </div>
+        
+    </nav>
+
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00.前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-小结"><span class="toc-number">2.</span> <span class="toc-text">0x02.小结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"scrapy 浅分析(四)　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2148375';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/03/29/无题-二/" title="上一篇: 无题(二)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/02/01/scrapy-浅分析-三/" title="下一篇: scrapy 浅分析(三)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 myndtt
+            </div>
+            <div class="footer-right">
+                <a href="#" target="_blank" >没有你的天堂...</a> <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
