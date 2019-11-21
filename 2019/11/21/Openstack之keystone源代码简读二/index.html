@@ -15,19 +15,19 @@
 
 
 
-<meta name="description" content="Openstack之keystone源代码简读二一、前言上次谈到initialize_admin_application ，今天来看看。 二、APP的启动wsgi.py文件的有两个初始化函数 12345678def initialize_admin_application():    return initialize_application(name=&apos;admin&apos;,">
+<meta name="description" content="一、前言上次谈到initialize_admin_application ，今天来看看。 二、APP的启动wsgi.py文件的有两个初始化函数 12345678def initialize_admin_application():    return initialize_application(name=&apos;admin&apos;,                                  conf">
 <meta name="keywords" content="记录,keystone,openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openstack之keystone源代码简读二">
 <meta property="og:url" content="https://myndtt.github.io/2019/11/21/Openstack之keystone源代码简读二/index.html">
 <meta property="og:site_name" content="myndtt || blog">
-<meta property="og:description" content="Openstack之keystone源代码简读二一、前言上次谈到initialize_admin_application ，今天来看看。 二、APP的启动wsgi.py文件的有两个初始化函数 12345678def initialize_admin_application():    return initialize_application(name=&apos;admin&apos;,">
+<meta property="og:description" content="一、前言上次谈到initialize_admin_application ，今天来看看。 二、APP的启动wsgi.py文件的有两个初始化函数 12345678def initialize_admin_application():    return initialize_application(name=&apos;admin&apos;,                                  conf">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://myndtt.github.io/images/66.png">
-<meta property="og:updated_time" content="2019-11-21T09:41:19.098Z">
+<meta property="og:updated_time" content="2019-11-21T09:47:02.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Openstack之keystone源代码简读二">
-<meta name="twitter:description" content="Openstack之keystone源代码简读二一、前言上次谈到initialize_admin_application ，今天来看看。 二、APP的启动wsgi.py文件的有两个初始化函数 12345678def initialize_admin_application():    return initialize_application(name=&apos;admin&apos;,">
+<meta name="twitter:description" content="一、前言上次谈到initialize_admin_application ，今天来看看。 二、APP的启动wsgi.py文件的有两个初始化函数 12345678def initialize_admin_application():    return initialize_application(name=&apos;admin&apos;,                                  conf">
 <meta name="twitter:image" content="https://myndtt.github.io/images/66.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -327,7 +327,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="Openstack之keystone源代码简读二"><a href="#Openstack之keystone源代码简读二" class="headerlink" title="Openstack之keystone源代码简读二"></a>Openstack之keystone源代码简读二</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>上次谈到<code>initialize_admin_application</code> ，今天来看看。</p>
+        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>上次谈到<code>initialize_admin_application</code> ，今天来看看。</p>
 <h2 id="二、APP的启动"><a href="#二、APP的启动" class="headerlink" title="二、APP的启动"></a>二、APP的启动</h2><p><code>wsgi.py</code>文件的有两个初始化函数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_admin_application</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> initialize_application(name=<span class="string">'admin'</span>,</span><br><span class="line">                                  config_files=_get_config_files())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_public_application</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> initialize_application(name=<span class="string">'main'</span>,</span><br><span class="line">                                  config_files=_get_config_files())</span><br></pre></td></tr></table></figure>
 
@@ -371,7 +371,7 @@
         <p><span>本文标题:</span><a href="/2019/11/21/Openstack之keystone源代码简读二/">Openstack之keystone源代码简读二</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
         <p><span>发布时间:</span>2019-11-21, 17:37:48</p>
-        <p><span>最后更新:</span>2019-11-21, 17:41:19</p>
+        <p><span>最后更新:</span>2019-11-21, 17:47:02</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/11/21/Openstack之keystone源代码简读二/" title="Openstack之keystone源代码简读二">https://myndtt.github.io/2019/11/21/Openstack之keystone源代码简读二/</a>
             <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2019/11/21/Openstack之keystone源代码简读二/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -411,7 +411,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Openstack之keystone源代码简读二"><span class="toc-number">1.</span> <span class="toc-text">Openstack之keystone源代码简读二</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前言"><span class="toc-number">1.1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、APP的启动"><span class="toc-number">1.2.</span> <span class="toc-text">二、APP的启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、总结"><span class="toc-number">1.3.</span> <span class="toc-text">三、总结</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前言"><span class="toc-number">1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、APP的启动"><span class="toc-number">2.</span> <span class="toc-text">二、APP的启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、总结"><span class="toc-number">3.</span> <span class="toc-text">三、总结</span></a></li></ol>
         
     </div>
     <style>
