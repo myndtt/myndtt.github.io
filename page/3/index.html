@@ -185,7 +185,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keystone/">keystone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
                     </div>
                 </section>
                 
@@ -286,6 +286,75 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-php两道题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/20/php两道题/" class="article-date">
+      <time datetime="2017-09-19T16:25:37.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/php两道题/">php两道题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>一：PHP的数组问题</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*******************************************************************</span></span><br><span class="line"><span class="comment"> * PHP Challenge 2015</span></span><br><span class="line"><span class="comment"> *******************************************************************</span></span><br><span class="line"><span class="comment"> * Why leave all the fun to the XSS crowd?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Do you know PHP?</span></span><br><span class="line"><span class="comment"> * And are you up to date with all its latest peculiarities?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Are you sure?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If you believe you do then solve this challenge and create an</span></span><br><span class="line"><span class="comment"> * input that will make the following code believe you are the ADMIN.</span></span><br><span class="line"><span class="comment"> * Becoming any other user is not good enough, but a first step.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Attention this code is installed on a Mac OS X 10.9 system</span></span><br><span class="line"><span class="comment"> * that is running PHP 5.4.30 !!!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * TIPS: OS X is mentioned because OS X never runs latest PHP</span></span><br><span class="line"><span class="comment"> *       Challenge will not work with latest PHP</span></span><br><span class="line"><span class="comment"> *       Also challenge will only work on 64bit systems</span></span><br><span class="line"><span class="comment"> *       To solve challenge you need to combine what a normal</span></span><br><span class="line"><span class="comment"> *       attacker would do when he sees this code with knowledge</span></span><br><span class="line"><span class="comment"> *       about latest known PHP quirks</span></span><br><span class="line"><span class="comment"> *       And you cannot bruteforce the admin password directly.</span></span><br><span class="line"><span class="comment"> *       To give you an idea - first half is:</span></span><br><span class="line"><span class="comment"> *          orewgfpeowöfgphewoöfeiuwgöpuerhjwfiuvuger</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If you know the answer please submit it to info<span class="doctag">@sektioneins</span>.de</span></span><br><span class="line"><span class="comment"> ********************************************************************/</span></span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/audit/">audit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/09/20/php两道题/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-某年某月的某一天" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -906,76 +975,6 @@
       
         <p class="article-more-link">
           <a href="/2017/07/24/实验吧 ctf 编程题(四)/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-   <!-- 添加打赏功能 只在文章详情中显示-->
-     
-      
-     
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-实验吧 ctf 编程题(三)" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/23/实验吧 ctf 编程题(三)/" class="article-date">
-      <time datetime="2017-07-23T12:16:44.000Z" itemprop="datePublished">2017-07-23</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>六：循环</p>
-<p>送分题，这里判断奇数偶数的时候我用了逻辑与，其实一个数是否为奇数还是偶数就是看二进制的最后一位</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">max=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> range(<span class="number">900</span>,<span class="number">10001</span>):</span><br><span class="line">n=a	</span><br><span class="line">num=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(n!=<span class="number">1</span>):</span><br><span class="line">	num+=<span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span>(n&amp;amp;<span class="number">1</span>==<span class="number">0</span>):</span><br><span class="line">		n=n/<span class="number">2</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		n=<span class="number">3</span>*n+<span class="number">1</span></span><br><span class="line"><span class="keyword">if</span>(num&amp;gt;max):</span><br><span class="line">	max=num</span><br><span class="line">	<span class="comment">#print max</span></span><br><span class="line">	<span class="keyword">print</span> max</span><br></pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/07/23/实验吧 ctf 编程题(三)/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
