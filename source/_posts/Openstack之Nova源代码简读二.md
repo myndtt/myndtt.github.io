@@ -1,11 +1,11 @@
 ---
 title: Openstack之Nova源代码简读二
 date: 2019-11-21 20:14:01
-tags:
+tags: [记录,nova,openstack]
 categories:
 ---
 
-# Openstack之Nova源代码简读二
+
 
 ## 一、前言
 
