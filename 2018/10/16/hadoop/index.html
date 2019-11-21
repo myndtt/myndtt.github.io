@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://myndtt.github.io/images/61.png">
 <meta property="og:image" content="https://myndtt.github.io/images/60.png">
 <meta property="og:image" content="http://www.aboutyun.com/data/attachment/forum/201701/28/173203drwcdwdu31dnwdit.jpg">
-<meta property="og:image" content="https://myndtt.github.io%5Cimages%5C5.jpg">
+<meta property="og:image" content="https://myndtt.github.io\images\\5.jpg">
 <meta property="og:updated_time" content="2019-09-22T05:33:55.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop(笔记)">
@@ -193,7 +193,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keystone/">keystone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
                     </div>
                 </section>
                 
@@ -341,7 +341,6 @@
 <p>分布式运算编程框架：MAPREDUCE —— 实现在很多机器上分布式并行运算</p>
 <p>分布式资源调度平台：YARN——帮用户调度大量的mapreduce程序，并合理分配运算资源</p>
 <a id="more"></a>
-
 <h2 id="二-HDFS"><a href="#二-HDFS" class="headerlink" title="二.HDFS"></a>二.HDFS</h2><p>Hadoop分布式文件系统(HDFS)被设计成适合运行在通用硬件(commodity hardware)上的分布式文件系统。它能提供高吞吐量的数据访问，非常适合大规模数据集上的应用。</p>
 <p>HDFS采用master/slave架构。一个HDFS集群是由一个Namenode和一定数目的Datanodes组成。Namenode是一个中心服务器，负责管理文件系统的名字空间(namespace)以及客户端对文件的访问。集群中的Datanode一般是一个节点一个，负责管理它所在节点上的存储。</p>
 <p>NameNode：是Master节点，是大领导。管理数据块映射；处理客户端的读写请求；配置副本策略；管理HDFS的名称空间；</p>
@@ -368,7 +367,7 @@
 <p>第二代Hadoop，为克服Hadoop1.0中HDFS和MapReduce存在的各种问题而提出的。针对Hadoop 1.0中的单NameNode制约HDFS的扩展性问题，提出了HDFSFederation，它让多个NameNode分管不同的目录进而实现访问隔离和横向扩展；针对Hadoop 1.0中的MapReduce在扩展性和多框架支持方面的不足，提出了全新的资源管理框架YARN。</p>
 <p><img src="http://www.aboutyun.com/data/attachment/forum/201701/28/173203drwcdwdu31dnwdit.jpg" alt="yarn示意图"></p>
 <p>可以看出JobTracker的功能被分散到各个进程中包括ResourceManager和NodeManager：比如监控功能，分给了NodeManager，和Application Master。<br>ResourceManager里面又分为了两个组件：调度器及应用程序管理器。也就是说Yarn重构后，JobTracker的功能，被分散到了各个进程中。同时由于这些进程可以被单独部署所以这样就大大减轻了单点故障，及压力。</p>
-<p><img src="https://myndtt.github.io%5Cimages%5C5.jpg" alt="比较"></p>
+<p><img src="https://myndtt.github.io\images\\5.jpg" alt="比较"></p>
 <h2 id="五-其他"><a href="#五-其他" class="headerlink" title="五.其他"></a>五.其他</h2><h3 id="1-Kafka"><a href="#1-Kafka" class="headerlink" title="1.Kafka"></a>1.Kafka</h3><p>kafka是一个分布式的消息缓存系统，可以同时支持离线数据处理和实时数据处理。</p>
 <h3 id="2-spark"><a href="#2-spark" class="headerlink" title="2.spark"></a>2.spark</h3><p>spark是一个非常流行的内存计算（或者迭代式计算，DAG计算）框架，在MapReduce因效率低下而被广为诟病时出现的一个令人称赞的框架。</p>
 <h3 id="3-Zookeeper"><a href="#3-Zookeeper" class="headerlink" title="3.Zookeeper"></a>3.Zookeeper</h3><p>Zookeeper 分布式服务框架是Hadoop的一个子项目。它主要是用来解决分布式应用中常常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。</p>
@@ -396,27 +395,8 @@
 
 
 
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/09/22/Openstack之Glance源代码简读一/">
-                    Openstack之Glance源代码简读一
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/03/29/无题-二/">
-                    无题(二)
-                </a>
-            </div>
-        
-    </nav>
-
   
    <!-- 添加打赏功能 只在文章详情中显示-->
-     
-      
      
 </article>
 
@@ -493,21 +473,17 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/09/22/Openstack之Glance源代码简读一/" title="上一篇: Openstack之Glance源代码简读一">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/03/29/无题-二/" title="下一篇: 无题(二)">
-                <i class="fa fa-angle-right"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/Openstack之keystone源代码简读一/">Openstack之keystone源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/Openstack之keystone源代码简读二/">Openstack之keystone源代码简读二</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li></ul>
 
 
 
