@@ -96,9 +96,9 @@ class ComputeTaskAPI(object):
 
 LibVirt的设计目标是通过相同的方式管理不同的虚拟化引擎，比如KVM，Xen,HyperV,VMware ESX等。但是目前Libvirt多数情况被用到的还是KVM(毕竟一家子)。其他有自己的管理工具。
 
-![]((https://myndtt.github.io/images/70.jpg)
+![](https://myndtt.github.io/images/70.jpg)
 
-![](G(https://myndtt.github.io/images/71.png)
+![](https://myndtt.github.io/images/71.png)
 
 
 
