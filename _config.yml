@@ -1,6 +1,7 @@
 # Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
+# Extensions
 
 # Site
 title: myndtt || blog
@@ -73,6 +74,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: yelee
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

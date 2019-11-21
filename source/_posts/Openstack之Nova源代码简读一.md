@@ -1,7 +1,7 @@
 ---
 title: Openstack之Nova源代码简读一
 date: 2019-11-21 19:42:01
-tags:
+tags: [记录,nova,openstack]
 categories:
 ---
 
@@ -12,12 +12,12 @@ categories:
 Compute Service Nova 是 OpenStack 最核心的服务，负责维护和管理云环境的计算资源。OpenStack 作为 IaaS 的云操作系统，虚拟机生命周期管理也就是通过 Nova 来实现的。openstack中其他的组件都可以看做为Nova服务。Nova组件有以下六部分组成： 
 
 ```python
-1) API服务器 API Server（Nova-api） 
-2) 计算工作者Compute Workers（Nova-compute） 
-3) 网络控制器Network Controller（Nova-network） 
-4) 卷工作者Volume Worker（Nova-volume） 
-5) 调度器Schedule（Nova-schedule） 
-6) 消息队列Message Queue（rabbitmq server）
+1 API服务器 API Server（Nova-api） 
+2 计算工作者Compute Workers（Nova-compute） 
+3 网络控制器Network Controller（Nova-network） 
+4 卷工作者Volume Worker（Nova-volume） 
+5 调度器Schedule（Nova-schedule） 
+6 消息队列Message Queue（rabbitmq server）
 ```
 
 具体概念可查看[这篇](<https://blog.csdn.net/ohenry88/article/details/75267742>)，或者[这篇](<https://mp.weixin.qq.com/s?__biz=MzIwMTM5MjUwMg==&mid=2653587855&idx=1&sn=06cc0f77ed94ec69b983d27a0e657b13&chksm=8d308196ba4708809892f84dc6367cade3864b1ba7fec89d792a8baefe3c00fb80b74557f720&scene=21#wechat_redirect>)
@@ -38,7 +38,7 @@ nova-api 是整个 Nova 组件的门户，所有对 Nova 的请求都首先由 n
 
 
 
-有点多😂。
+有点多。
 
 ```python
 def main():
@@ -275,7 +275,7 @@ return instances, reservation_id
 
 ## 四、总结
 
-nova工作原理图如下所示,
+nova工作原理图如下所示
 
 ![nova](https://myndtt.github.io/images/68.jpg)
 
