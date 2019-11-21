@@ -316,7 +316,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h1 id="Openstack之keystone源代码简读一"><a href="#Openstack之keystone源代码简读一" class="headerlink" title="Openstack之keystone源代码简读一"></a>Openstack之keystone源代码简读一</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
+              <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
 <p>作为 OpenStack 的基础支持服务，Keystone 做下面这几件事情：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、管理用户及其权限</span><br><span class="line">    不同用户拥有不同权限。这里的权限不仅仅指的是用户对于某项资源的权限，也包括对某项用户的权限。</span><br><span class="line"><span class="number">2</span>、维护 OpenStack Services 的 Endpoint</span><br><span class="line">Endpoint 是一个网络上可访问的地址，通常是一个 URL。Service 通过 Endpoint 暴露自己的 API，Keystone 负责管理和维护每个 Service 的 Endpoint。（关键）</span><br><span class="line"><span class="number">3.</span>Authentication（认证）和 Authorization（鉴权）</span><br></pre></td></tr></table></figure>
 
