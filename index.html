@@ -287,6 +287,75 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Openstack之keystone源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/21/Openstack之keystone源代码简读一/" class="article-date">
+      <time datetime="2019-11-21T08:53:37.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/21/Openstack之keystone源代码简读一/">Openstack之keystone源代码简读一</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Openstack之keystone源代码简读一"><a href="#Openstack之keystone源代码简读一" class="headerlink" title="Openstack之keystone源代码简读一"></a>Openstack之keystone源代码简读一</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
+<p>作为 OpenStack 的基础支持服务，Keystone 做下面这几件事情：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、管理用户及其权限</span><br><span class="line">    不同用户拥有不同权限。这里的权限不仅仅指的是用户对于某项资源的权限，也包括对某项用户的权限。</span><br><span class="line"><span class="number">2</span>、维护 OpenStack Services 的 Endpoint</span><br><span class="line">Endpoint 是一个网络上可访问的地址，通常是一个 URL。Service 通过 Endpoint 暴露自己的 API，Keystone 负责管理和维护每个 Service 的 Endpoint。（关键）</span><br><span class="line"><span class="number">3.</span>Authentication（认证）和 Authorization（鉴权）</span><br></pre></td></tr></table></figure>
+
+<p>更多基本概念的介绍可以查看<a href="https://blog.csdn.net/zhongbeida_xue/article/details/78654676" target="_blank" rel="noopener">OpenStack keystone详解及调优</a>和<a href="https://mp.weixin.qq.com/s?__biz=MzIwMTM5MjUwMg==&mid=2653587894&idx=1&sn=877a9cb2c23f242e45e7c113f2d2440f&chksm=8d3081afba4708b9295debc08ac8159927733a1429a5f488ce136370984be15e6039b3496b46&scene=21#wechat_redirect" target="_blank" rel="noopener">理解 Keystone 核心概念 - 每天5分钟玩转 OpenStack(18)</a>，<a href="https://www.cnblogs.com/linhaifeng/p/6248086.html" target="_blank" rel="noopener">推荐看</a></p>
+<h2 id="二、安装"><a href="#二、安装" class="headerlink" title="二、安装"></a>二、安装</h2><p>我的机器是ubuntu 18，可以按照<a href="https://docs.openstack.org/keystone/latest/install/keystone-install-ubuntu.html#install-and-configure-components" target="_blank" rel="noopener">官网</a>安装,或者你不喜欢看简单的英文话，可以参考<a href="https://www.cnblogs.com/jsonhc/p/7692418.html" target="_blank" rel="noopener">这篇</a>或者<a href="https://www.cnblogs.com/linhaifeng/p/6269707.html" target="_blank" rel="noopener">这篇</a>,都讲的很详细，当然因为版本不同，大家不要一股脑就直接复制，粘贴安装。会有问题。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2019/11/21/Openstack之keystone源代码简读一/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Openstack之Glance源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -928,78 +997,6 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/胡说八道/">胡说八道</a></li></ul>
     </div>
 
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-   <!-- 添加打赏功能 只在文章详情中显示-->
-     
-      
-     
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-php的session反序列化" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/12/19/php的session反序列化/" class="article-date">
-      <time datetime="2017-12-19T12:35:46.000Z" itemprop="datePublished">2017-12-19</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/19/php的session反序列化/">php的session反序列化</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="0x00-打字机"><a href="#0x00-打字机" class="headerlink" title="0x00.打字机"></a>0x00.打字机</h2><p>简单扯一下，大家都知道，几乎所有的编程语言都有(反)序列化这种机制，可以将一些对象，数组等通过<code>某种方式</code>变成可以便捷传输和存储(后面将提到)的形式，如字符串。当然php也不例外。</p>
-<p><img src="https://myndtt.github.io%5Cimages%5C43.png" alt="43"></p>
-<p>同时在php有一个这样有意思的设置–&gt;<code>php默认的SESSION会话机制 存储在文件系统的会话数据的内容是已经序列化后的内容,程序执行session_start()后PHP会自动读取文件并unserialize反序列化成数组赋值给超全局变量$_SESSION</code> (这句话是没错的)。</p>
-<p><img src="https://myndtt.github.io%5Cimages%5C44.png" alt="44"></p>
-<p>​       <code>(session_register这个函数功能即是可以在全部变量中session定义一个新的变量)</code></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/12/19/php的session反序列化/#more">阅读全文 >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
