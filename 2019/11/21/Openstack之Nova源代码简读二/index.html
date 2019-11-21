@@ -15,18 +15,21 @@
 
 
 
-<meta name="description" content="十九：两个最大子串和 一开始以为是连续子串和，并且没看对题目，没对搞蒙了都，非连续的就很简单判断是否为最大的就是从第一个数就开始往上加，大于就加入，小于就不管，继续找下一个数。两个最大就是将原子串一分为二分别找最大就好了。但还是提交不对，可能是我get不到这个点吧。给出网上的 1234567891011121314151617181920212223242526272829303132333435">
-<meta name="keywords" content="ctf,实验吧,编程">
+<meta name="description" content="Openstack之Nova源代码简读二一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图  1234561.客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；2.API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Schedu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实验吧 CTF 编程题 （六）">
-<meta property="og:url" content="https://myndtt.github.io/2017/07/26/实验吧 ctf 编程题(六)/index.html">
+<meta property="og:title" content="Openstack之Nova源代码简读二">
+<meta property="og:url" content="https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/index.html">
 <meta property="og:site_name" content="myndtt || blog">
-<meta property="og:description" content="十九：两个最大子串和 一开始以为是连续子串和，并且没看对题目，没对搞蒙了都，非连续的就很简单判断是否为最大的就是从第一个数就开始往上加，大于就加入，小于就不管，继续找下一个数。两个最大就是将原子串一分为二分别找最大就好了。但还是提交不对，可能是我get不到这个点吧。给出网上的 1234567891011121314151617181920212223242526272829303132333435">
+<meta property="og:description" content="Openstack之Nova源代码简读二一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图  1234561.客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；2.API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Schedu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-22T05:04:46.328Z">
+<meta property="og:image" content="https://myndtt.github.io/images/69.jpg">
+<meta property="og:image" content="https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/(https://myndtt.github.io/images/70.jpg">
+<meta property="og:image" content="https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/G(https://myndtt.github.io/images/71.png">
+<meta property="og:updated_time" content="2019-11-21T12:16:08.005Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实验吧 CTF 编程题 （六）">
-<meta name="twitter:description" content="十九：两个最大子串和 一开始以为是连续子串和，并且没看对题目，没对搞蒙了都，非连续的就很简单判断是否为最大的就是从第一个数就开始往上加，大于就加入，小于就不管，继续找下一个数。两个最大就是将原子串一分为二分别找最大就好了。但还是提交不对，可能是我get不到这个点吧。给出网上的 1234567891011121314151617181920212223242526272829303132333435">
+<meta name="twitter:title" content="Openstack之Nova源代码简读二">
+<meta name="twitter:description" content="Openstack之Nova源代码简读二一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图  1234561.客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；2.API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Schedu">
+<meta name="twitter:image" content="https://myndtt.github.io/images/69.jpg">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -58,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>实验吧 CTF 编程题 （六） | myndtt || blog</title>
+<title>Openstack之Nova源代码简读二 | myndtt || blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -285,11 +288,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-实验吧 ctf 编程题(六)" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Openstack之Nova源代码简读二" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/26/实验吧 ctf 编程题(六)/" class="article-date">
-      <time datetime="2017-07-26T02:09:17.000Z" itemprop="datePublished">2017-07-26</time>
+      <a href="/2019/11/21/Openstack之Nova源代码简读二/" class="article-date">
+      <time datetime="2019-11-21T12:14:01.000Z" itemprop="datePublished">2019-11-21</time>
 </a>
 
 
@@ -304,7 +307,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      实验吧 CTF 编程题 （六）
+      Openstack之Nova源代码简读二
     </h1>
   
 
@@ -314,10 +317,6 @@
         
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -325,12 +324,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>十九：两个最大子串和</p>
-<p>一开始以为是连续子串和，并且没看对题目，没对搞蒙了都，非连续的就很简单判断是否为最大的就是从第一个数就开始往上加，大于就加入，小于就不管，继续找下一个数。两个最大就是将原子串一分为二分别找最大就好了。但还是提交不对，可能是我get不到这个点吧。给出网上的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>   </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">-0xfffffff</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> b[Max + <span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> m1[Max + <span class="number">2</span>], m2[Max + <span class="number">2</span>]; <span class="comment">// m1[i]:Max sum of sub array [0,i] of a  </span></span><br><span class="line">								  <span class="comment">// m2[i]:Max sum of sub array [i,n-1] of a  </span></span><br><span class="line"><span class="keyword">int</span> maxSum; <span class="comment">// res  </span></span><br><span class="line"><span class="keyword">int</span> a[] = &#123; <span class="number">-132</span>,<span class="number">133</span>,<span class="number">134</span>,<span class="number">-11</span>,<span class="number">12</span>,<span class="number">-139</span>,<span class="number">-140</span>,<span class="number">62</span>,<span class="number">63</span>,<span class="number">-64</span>,<span class="number">65</span>,<span class="number">66</span>,<span class="number">67</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">-6</span>,<span class="number">7</span>,<span class="number">-48</span>,<span class="number">-49</span>,<span class="number">50</span>,<span class="number">138</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">101</span>,<span class="number">102</span>,<span class="number">-103</span>,<span class="number">104</span>,<span class="number">-105</span>,<span class="number">106</span>,<span class="number">146</span>,<span class="number">147</span>,<span class="number">148</span>,<span class="number">-107</span>,<span class="number">108</span>,<span class="number">109</span>,<span class="number">110</span>,<span class="number">96</span>,<span class="number">21</span>,<span class="number">-22</span>,<span class="number">23</span>,<span class="number">-24</span>,<span class="number">-25</span>,<span class="number">25</span>,<span class="number">-27</span>,<span class="number">-28</span>,<span class="number">-29</span>,<span class="number">30</span>,<span class="number">41</span>,<span class="number">-42</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">-46</span>,<span class="number">-47</span>,<span class="number">51</span>,<span class="number">52</span>,<span class="number">-53</span>,<span class="number">54</span>,<span class="number">-55</span>,<span class="number">-56</span>,<span class="number">57</span>,<span class="number">-58</span>,<span class="number">59</span>,<span class="number">60</span>,<span class="number">73</span>,<span class="number">-74</span>,<span class="number">75</span>,<span class="number">-71</span>,<span class="number">-72</span>,<span class="number">18</span>,<span class="number">-97</span>,<span class="number">-98</span>,<span class="number">19</span>,<span class="number">-129</span>,<span class="number">130</span>,<span class="number">-137</span>,<span class="number">136</span>,<span class="number">-13</span>,<span class="number">14</span>,<span class="number">144</span>,<span class="number">-145</span>,<span class="number">15</span>,<span class="number">128</span>,<span class="number">77</span>,<span class="number">-78</span>,<span class="number">-31</span>,<span class="number">32</span>,<span class="number">35</span>,<span class="number">-76</span>,<span class="number">149</span>,<span class="number">-150</span>,<span class="number">99</span>,<span class="number">100</span>,<span class="number">119</span>,<span class="number">91</span>,<span class="number">-92</span>,<span class="number">-93</span>,<span class="number">94</span>,<span class="number">95</span>,<span class="number">116</span>,<span class="number">117</span>,<span class="number">114</span>,<span class="number">118</span>,<span class="number">120</span>,<span class="number">81</span>,<span class="number">82</span>,<span class="number">83</span>,<span class="number">-84</span>,<span class="number">85</span>,<span class="number">-122</span>,<span class="number">-123</span>,<span class="number">112</span>,<span class="number">111</span>,<span class="number">-43</span>,<span class="number">44</span>,<span class="number">45</span>,<span class="number">-113</span>,<span class="number">-115</span>,<span class="number">36</span>,<span class="number">-37</span>,<span class="number">-38</span>,<span class="number">39</span>,<span class="number">40</span>,<span class="number">25</span>,<span class="number">126</span>,<span class="number">127</span>,<span class="number">131</span>,<span class="number">-135</span>,<span class="number">61</span>,<span class="number">-69</span>,<span class="number">70</span>,<span class="number">141</span>,<span class="number">-142</span>,<span class="number">143</span>,<span class="number">-86</span>,<span class="number">68</span>,<span class="number">-87</span>,<span class="number">-90</span>,<span class="number">121</span>,<span class="number">-88</span>,<span class="number">89</span>,<span class="number">-124</span>,<span class="number">-179</span>,<span class="number">-80</span>,<span class="number">-33</span>,<span class="number">34</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a) / <span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line">	m1[<span class="number">0</span>] = m2[n + <span class="number">1</span>] = INF;</span><br><span class="line">	<span class="built_in">memset</span>(b, <span class="number">0</span>, <span class="keyword">sizeof</span>(b));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (b[i - <span class="number">1</span>] &gt;= <span class="number">0</span>)</span><br><span class="line">			b[i] = b[i - <span class="number">1</span>] + a[i];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			b[i] = a[i];</span><br><span class="line">		m1[i] = b[i] &gt; m1[i - <span class="number">1</span>] ? b[i] : m1[i - <span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= <span class="number">1</span>; --i) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (b[i + <span class="number">1</span>] &gt;= <span class="number">0</span>)</span><br><span class="line">			b[i] = b[i + <span class="number">1</span>] + a[i];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			b[i] = a[i];</span><br><span class="line">		m2[i] = b[i] &gt; m2[i + <span class="number">1</span>] ? b[i] : m2[i + <span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	maxSum = INF;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m1[i] + m2[i + <span class="number">1</span>] &gt; maxSum)</span><br><span class="line">			maxSum = m1[i] + m2[i + <span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, maxSum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="Openstack之Nova源代码简读二"><a href="#Openstack之Nova源代码简读二" class="headerlink" title="Openstack之Nova源代码简读二"></a>Openstack之Nova源代码简读二</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图</p>
+<p><img src="https://myndtt.github.io/images/69.jpg" alt></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；</span><br><span class="line"><span class="number">2.</span>API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Scheduler创建一个虚机”；</span><br><span class="line"><span class="number">3.</span>Scheduler（nova-scheduler）从Messaging获取到API发给它的消息，然后执行调度算法，从若干计算节点中选出节点 A ；</span><br><span class="line"><span class="number">4.</span>Scheduler向Messaging发送了一条消息：“在计算节点 A 上创建这个虚机”</span><br><span class="line"><span class="number">5.</span>计算节点 A 的Compute（nova-compute）从Messaging中获取到Scheduler发给它的消息，然后在本节点的Hypervisor上启动虚机；</span><br><span class="line"><span class="number">6.</span>在虚机创建的过程中，Compute如果需要查询或更新数据库信息，会通过Messaging向Conductor（nova-conductor）发送消息，Conductor负责数据库访问。</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>就是用数组保存前几项最大值，和后几项最大值，循环加起来就好，但我觉得最后应该是两重循环。不仅仅是i+1，应当包括i-n所有的。<br>二十：分数拆分<br>根据X&gt;Y推算出Y范围，进而确定X</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> y=<span class="number">201</span>;y&lt;=<span class="number">600</span>;y++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="number">400</span>*y%(y<span class="number">-200</span>)==<span class="number">0</span>)&#123;</span><br><span class="line">            sum++;</span><br><span class="line">			<span class="keyword">int</span> x = <span class="number">400</span>*y/(y<span class="number">-200</span>);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"1/%d = 1/%d + 1/%d\n"</span>,<span class="number">400</span>,x,<span class="number">2</span>*y);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>,sum);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二、寻找RabbitMQ"><a href="#二、寻找RabbitMQ" class="headerlink" title="二、寻找RabbitMQ"></a>二、寻找RabbitMQ</h2><p>openstack中nova的messaging机制通常是由RabbitMQ实现。RabbitMQ 是基于 AMQP协议实现的一个消息队列实现 RPC，那么什么是RPC呢。RPC（Remote Procedure Call）—<a href="https://baike.baidu.com/item/%E8%BF%9C%E7%A8%8B%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8/7854346" target="_blank" rel="noopener">远程过程调用</a>，它是一种通过<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C/143243" target="_blank" rel="noopener">网络</a>从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">self.compute_task_api.build_instances(context,</span><br><span class="line">    instances=instances, image=boot_meta,</span><br><span class="line">    filter_properties=filter_properties,</span><br><span class="line">    admin_password=admin_password,</span><br><span class="line">    injected_files=injected_files,</span><br><span class="line">    requested_networks=requested_networks,</span><br><span class="line">    security_groups=security_groups,</span><br><span class="line">    block_device_mapping=block_device_mapping,</span><br><span class="line">    legacy_bdm=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<p>上一篇是看到这里。没有继续讨论，现在跟进这个函数。让我们先看看<code>compute_task_api</code>是如何定义的。</p>
+<p><code>self.compute_task_api = conductor.ComputeTaskAPI()</code>由此可知compute_task_api为<code>conductor</code>的一个computetaskapi的类，用于排列计算任务。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ComputeTaskAPI</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""ComputeTask API that queues up compute tasks for nova-conductor."""</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.conductor_compute_rpcapi = rpcapi.ComputeTaskAPI()<span class="comment">#跟进</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">super(ComputeTaskAPI, self).__init__()</span><br><span class="line">target = messaging.Target(topic=RPC_TOPIC,</span><br><span class="line">                          namespace=<span class="string">'compute_task'</span>,</span><br><span class="line">                          version=<span class="string">'1.0'</span>)<span class="comment">#好的，看到messaging了 </span></span><br><span class="line">serializer = objects_base.NovaObjectSerializer()</span><br><span class="line">self.client = rpc.get_client(target, serializer=serializer)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_instances</span><span class="params">(self, context, instances, image, filter_properties,</span></span></span><br><span class="line"><span class="function"><span class="params">        admin_password, injected_files, requested_networks,</span></span></span><br><span class="line"><span class="function"><span class="params">        security_groups, block_device_mapping, legacy_bdm=True,</span></span></span><br><span class="line"><span class="function"><span class="params">        request_spec=None, host_lists=None)</span>:</span></span><br><span class="line">     <span class="comment">#调用ComputeTaskManager类的build_instances函数</span></span><br><span class="line">    self.conductor_compute_rpcapi.build_instances(context,</span><br><span class="line">            instances=instances, image=image,</span><br><span class="line">            filter_properties=filter_properties,</span><br><span class="line">            admin_password=admin_password, injected_files=injected_files,</span><br><span class="line">            requested_networks=requested_networks,</span><br><span class="line">            security_groups=security_groups,</span><br><span class="line">            block_device_mapping=block_device_mapping,</span><br><span class="line">            legacy_bdm=legacy_bdm, request_spec=request_spec,</span><br><span class="line">            host_lists=host_lists)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cctxt = self.client.prepare(version=version)</span><br><span class="line">cctxt.cast(context, <span class="string">'build_instances'</span>, **kwargs)<span class="comment">#调用cast方法，发送请求不用等待响应</span></span><br></pre></td></tr></table></figure>
+<p>用户想要启动一个实例时，<br>1、nova-api作为消息生产者，将“启动实例”的消息包装成amqp消息以rpc.call的方式通过topic交换机放入消息队列；<br>2、nova-compute作为消息消费者，接受该消息并通过底层虚拟化软件执行相应操作；<br>3、虚拟机启动成功后，nova-compute作为消息生产者将“实例启动成功”的消息通过direct交换机放入相应的响应队列； </p>
+<p>4、nova-api作为消息消费者接受该消息并通知用户。</p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>利用的python库，除了之前提到的。这里主要是<code>oslo_messaging</code>对rabbitmq等ampq的封装。剩下的就是<code>nova-compute</code>中LibVirt对各类虚拟产品的管理。目前常见的企业级虚拟化产品有<code>VMware,HyperV,Xen,KVm</code></p>
+<p>LibVirt的设计目标是通过相同的方式管理不同的虚拟化引擎，比如KVM，Xen,HyperV,VMware ESX等。但是目前Libvirt多数情况被用到的还是KVM(毕竟一家子)。其他有自己的管理工具。</p>
+<p><img src="(https://myndtt.github.io/images/70.jpg" alt></p>
+<p><img src="G(https://myndtt.github.io/images/71.png" alt></p>
 
       
     </div>
@@ -339,13 +350,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></p>
+        <p><span>本文标题:</span><a href="/2019/11/21/Openstack之Nova源代码简读二/">Openstack之Nova源代码简读二</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
-        <p><span>发布时间:</span>2017-07-26, 10:09:17</p>
-        <p><span>最后更新:</span>2019-09-22, 13:04:46</p>
+        <p><span>发布时间:</span>2019-11-21, 20:14:01</p>
+        <p><span>最后更新:</span>2019-11-21, 20:16:08</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/26/实验吧 ctf 编程题(六)/" title="实验吧 CTF 编程题 （六）">https://myndtt.github.io/2017/07/26/实验吧 ctf 编程题(六)/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2017/07/26/实验吧 ctf 编程题(六)/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/11/21/Openstack之Nova源代码简读二/" title="Openstack之Nova源代码简读二">https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -357,16 +368,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/08/29/Python 网易云签到/">
-                    python-网易云音乐签到，词云
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/07/24/实验吧 ctf 编程题(五)/">
-                    实验吧 CTF 编程题（五）
+                <a href="/2019/11/21/Openstack之Nova源代码简读一/">
+                    Openstack之Nova源代码简读一
                 </a>
             </div>
         
@@ -382,7 +387,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Openstack之Nova源代码简读二"><span class="toc-number">1.</span> <span class="toc-text">Openstack之Nova源代码简读二</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前言"><span class="toc-number">1.1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、寻找RabbitMQ"><span class="toc-number">1.2.</span> <span class="toc-text">二、寻找RabbitMQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、总结"><span class="toc-number">1.3.</span> <span class="toc-text">三、总结</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -418,7 +423,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"实验吧 CTF 编程题 （六）　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Openstack之Nova源代码简读二　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -452,15 +457,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/08/29/Python 网易云签到/" title="上一篇: python-网易云音乐签到，词云">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/24/实验吧 ctf 编程题(五)/" title="下一篇: 实验吧 CTF 编程题（五）">
+            <a href="/2019/11/21/Openstack之Nova源代码简读一/" title="下一篇: Openstack之Nova源代码简读一">
                 <i class="fa fa-angle-right"></i>
             </a>
         

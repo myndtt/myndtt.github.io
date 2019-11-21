@@ -287,6 +287,76 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-实验吧 ctf 编程题(五)" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/24/实验吧 ctf 编程题(五)/" class="article-date">
+      <time datetime="2017-07-24T14:49:21.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>十六：二叉树遍历</p>
+<p>这算是比较老的一道题了，如果是做题，可以直接画图画出来，以前写过已知二叉树前序中序求后序的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Tree</span>&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> *<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> *<span class="title">right</span>;</span></span><br><span class="line">	<span class="keyword">char</span> num;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> <span class="title">treenode</span>;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getit</span><span class="params">(<span class="keyword">char</span>* inor,<span class="keyword">char</span>* preor,<span class="keyword">int</span> length)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==length)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	Tree * newnode = <span class="keyword">new</span> Tree;<span class="comment">//分配空间</span></span><br><span class="line">	newnode-&gt;num=*preor;</span><br><span class="line">	<span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;flagnum;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">	<span class="keyword">char</span>* preor=<span class="string">"DBACEGF"</span>;</span><br><span class="line">	<span class="keyword">char</span>* inor=<span class="string">"ABCDEFG"</span>;</span><br><span class="line">	<span class="comment">//printf ("%d",sizeof(preor));</span></span><br><span class="line">	getit(inor,preor,<span class="number">8</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/07/24/实验吧 ctf 编程题(五)/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-实验吧 ctf 编程题(四)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

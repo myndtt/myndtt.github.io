@@ -287,6 +287,72 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Openstack之Nova源代码简读二" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/21/Openstack之Nova源代码简读二/" class="article-date">
+      <time datetime="2019-11-21T12:14:01.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/21/Openstack之Nova源代码简读二/">Openstack之Nova源代码简读二</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="Openstack之Nova源代码简读二"><a href="#Openstack之Nova源代码简读二" class="headerlink" title="Openstack之Nova源代码简读二"></a>Openstack之Nova源代码简读二</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图</p>
+<p><img src="https://myndtt.github.io/images/69.jpg" alt></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；</span><br><span class="line"><span class="number">2.</span>API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Scheduler创建一个虚机”；</span><br><span class="line"><span class="number">3.</span>Scheduler（nova-scheduler）从Messaging获取到API发给它的消息，然后执行调度算法，从若干计算节点中选出节点 A ；</span><br><span class="line"><span class="number">4.</span>Scheduler向Messaging发送了一条消息：“在计算节点 A 上创建这个虚机”</span><br><span class="line"><span class="number">5.</span>计算节点 A 的Compute（nova-compute）从Messaging中获取到Scheduler发给它的消息，然后在本节点的Hypervisor上启动虚机；</span><br><span class="line"><span class="number">6.</span>在虚机创建的过程中，Compute如果需要查询或更新数据库信息，会通过Messaging向Conductor（nova-conductor）发送消息，Conductor负责数据库访问。</span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2019/11/21/Openstack之Nova源代码简读二/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Openstack之Nova源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -910,78 +976,6 @@
       
         <p class="article-more-link">
           <a href="/2018/01/31/scrapy-浅分析-二/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-   <!-- 添加打赏功能 只在文章详情中显示-->
-     
-      
-     
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-scrapy-浅分析-一" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/01/30/scrapy-浅分析-一/" class="article-date">
-      <time datetime="2018-01-30T07:13:40.000Z" itemprop="datePublished">2018-01-30</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h1><p>相信大家都用过python的scrapy框架写给爬虫。然后就想看看这个框架的简单执行流程。</p>
-<h1 id="0x01-大体架构"><a href="#0x01-大体架构" class="headerlink" title="0x01.大体架构"></a>0x01.大体架构</h1><p>官方架构图如下</p>
-<p><img src="http://myndtt.github.io/images/58.png" alt="architecture"></p>
-<p>图大体架构很清晰，实际以例子来看看，一般我们的爬虫以如下代码开始运行(命令行是一样的)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> cmdline</span><br><span class="line"></span><br><span class="line">cmdline.execute(<span class="string">"scrapy crawl xxx"</span>.split())</span><br></pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/">scrapy</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/01/30/scrapy-浅分析-一/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

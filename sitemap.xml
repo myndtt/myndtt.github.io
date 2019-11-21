@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://myndtt.github.io/2019/11/21/Openstack%E4%B9%8BNova%E6%BA%90%E4%BB%A3%E7%A0%81%E7%AE%80%E8%AF%BB%E4%BA%8C/</loc>
+    
+    <lastmod>2019-11-21T12:16:08.005Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://myndtt.github.io/2019/11/21/Openstack%E4%B9%8BNova%E6%BA%90%E4%BB%A3%E7%A0%81%E7%AE%80%E8%AF%BB%E4%B8%80/</loc>
     
-    <lastmod>2019-11-21T11:56:25.598Z</lastmod>
+    <lastmod>2019-11-21T12:14:44.578Z</lastmod>
     
   </url>
   
@@ -184,14 +191,14 @@
   </url>
   
   <url>
-    <loc>https://myndtt.github.io/2018/01/31/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%BA%8C/</loc>
+    <loc>https://myndtt.github.io/2018/02/01/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%89/</loc>
     
     <lastmod>2019-09-22T05:04:46.318Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://myndtt.github.io/2018/02/01/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%89/</loc>
+    <loc>https://myndtt.github.io/2018/01/31/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%BA%8C/</loc>
     
     <lastmod>2019-09-22T05:04:46.318Z</lastmod>
     

@@ -287,6 +287,80 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-几道sqli" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/26/几道sqli/" class="article-date">
+      <time datetime="2017-10-26T08:21:53.000Z" itemprop="datePublished">2017-10-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/26/几道sqli/">几道sql</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h2><p>今天在一个网站上做sql注入的题，有几道题，感觉挺有意思的。</p>
+<p>一.题目链接: <a href="http://los.eagle-jump.org/orc_47190a4d33f675a601f8def32df2583a.php" target="_blank" rel="noopener">http://los.eagle-jump.org/orc_47190a4d33f675a601f8def32df2583a.php</a></p>
+<p>代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">  <span class="keyword">include</span> <span class="string">"./config.php"</span>; </span><br><span class="line">  login_chk(); </span><br><span class="line">  dbconnect(); </span><br><span class="line">  <span class="keyword">if</span>(preg_match(<span class="string">'/prob|_|\.|\(\)/i'</span>, $_GET[pw])) <span class="keyword">exit</span>(<span class="string">"No Hack ~_~"</span>); </span><br><span class="line">  $query = <span class="string">"select id from prob_orc where id='admin' and pw='&#123;$_GET[pw]&#125;'"</span>; </span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;hr&gt;query : &lt;strong&gt;&#123;$query&#125;&lt;/strong&gt;&lt;hr&gt;&lt;br&gt;"</span>; </span><br><span class="line">  $result = @mysql_fetch_array(mysql_query($query)); </span><br><span class="line">  <span class="keyword">if</span>($result[<span class="string">'id'</span>]) <span class="keyword">echo</span> <span class="string">"&lt;h2&gt;Hello admin&lt;/h2&gt;"</span>; </span><br><span class="line">  $_GET[pw] = addslashes($_GET[pw]); </span><br><span class="line">  $query = <span class="string">"select pw from prob_orc where id='admin' and pw='&#123;$_GET[pw]&#125;'"</span>; </span><br><span class="line">  $result = @mysql_fetch_array(mysql_query($query)); </span><br><span class="line">  <span class="keyword">if</span>(($result[<span class="string">'pw'</span>]) &amp;&amp; ($result[<span class="string">'pw'</span>] == $_GET[<span class="string">'pw'</span>])) solve(<span class="string">"orc"</span>); </span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这代码够简单的啦，还带回显的。看了看最后，估计是要我们盲注得到pw，这还不简单？写个脚本跑去来，得到pw长度，二分法去提取好了。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pw=<span class="string">''</span> || length(pw)&gt;<span class="number">0</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">pw=<span class="string">''</span> || ascii(substr(pw,<span class="number">1</span>,<span class="number">1</span>))&gt;<span class="number">0</span></span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+<p>对，确实如此，但是实际上我按上面那种方法怎么爆破都不对，甚至怀疑过我的代码，出轨了？</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/audit/">audit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/10/26/几道sqli/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-url中的下划线" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -904,76 +978,6 @@
       
         <p class="article-more-link">
           <a href="/2017/07/26/实验吧 ctf 编程题(六)/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-   <!-- 添加打赏功能 只在文章详情中显示-->
-     
-      
-     
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-实验吧 ctf 编程题(五)" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/24/实验吧 ctf 编程题(五)/" class="article-date">
-      <time datetime="2017-07-24T14:49:21.000Z" itemprop="datePublished">2017-07-24</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>十六：二叉树遍历</p>
-<p>这算是比较老的一道题了，如果是做题，可以直接画图画出来，以前写过已知二叉树前序中序求后序的代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Tree</span>&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> *<span class="title">left</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> *<span class="title">right</span>;</span></span><br><span class="line">	<span class="keyword">char</span> num;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> <span class="title">treenode</span>;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getit</span><span class="params">(<span class="keyword">char</span>* inor,<span class="keyword">char</span>* preor,<span class="keyword">int</span> length)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==length)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	Tree * newnode = <span class="keyword">new</span> Tree;<span class="comment">//分配空间</span></span><br><span class="line">	newnode-&gt;num=*preor;</span><br><span class="line">	<span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;flagnum;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> main()&#123;</span><br><span class="line">	<span class="keyword">char</span>* preor=<span class="string">"DBACEGF"</span>;</span><br><span class="line">	<span class="keyword">char</span>* inor=<span class="string">"ABCDEFG"</span>;</span><br><span class="line">	<span class="comment">//printf ("%d",sizeof(preor));</span></span><br><span class="line">	getit(inor,preor,<span class="number">8</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程/">编程</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/07/24/实验吧 ctf 编程题(五)/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
