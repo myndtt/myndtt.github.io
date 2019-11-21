@@ -24,9 +24,9 @@
 <meta property="og:description" content="一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图  1234561.客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；2.API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Scheduler创建一个虚机”；3.Schedul">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://myndtt.github.io/images/69.jpg">
-<meta property="og:image" content="https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/(https://myndtt.github.io/images/70.jpg">
-<meta property="og:image" content="https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/G(https://myndtt.github.io/images/71.png">
-<meta property="og:updated_time" content="2019-11-21T12:19:42.200Z">
+<meta property="og:image" content="https://myndtt.github.io/images/70.jpg">
+<meta property="og:image" content="https://myndtt.github.io/images/71.png">
+<meta property="og:updated_time" content="2019-11-21T12:21:55.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Openstack之Nova源代码简读二">
 <meta name="twitter:description" content="一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图  1234561.客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；2.API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Scheduler创建一个虚机”；3.Schedul">
@@ -345,8 +345,8 @@
 <p>4、nova-api作为消息消费者接受该消息并通知用户。</p>
 <h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>利用的python库，除了之前提到的。这里主要是<code>oslo_messaging</code>对rabbitmq等ampq的封装。剩下的就是<code>nova-compute</code>中LibVirt对各类虚拟产品的管理。目前常见的企业级虚拟化产品有<code>VMware,HyperV,Xen,KVm</code></p>
 <p>LibVirt的设计目标是通过相同的方式管理不同的虚拟化引擎，比如KVM，Xen,HyperV,VMware ESX等。但是目前Libvirt多数情况被用到的还是KVM(毕竟一家子)。其他有自己的管理工具。</p>
-<p><img src="(https://myndtt.github.io/images/70.jpg" alt></p>
-<p><img src="G(https://myndtt.github.io/images/71.png" alt></p>
+<p><img src="https://myndtt.github.io/images/70.jpg" alt></p>
+<p><img src="https://myndtt.github.io/images/71.png" alt></p>
 
       
     </div>
@@ -358,7 +358,7 @@
         <p><span>本文标题:</span><a href="/2019/11/21/Openstack之Nova源代码简读二/">Openstack之Nova源代码简读二</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
         <p><span>发布时间:</span>2019-11-21, 20:14:01</p>
-        <p><span>最后更新:</span>2019-11-21, 20:19:42</p>
+        <p><span>最后更新:</span>2019-11-21, 20:21:55</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/11/21/Openstack之Nova源代码简读二/" title="Openstack之Nova源代码简读二">https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/</a>
             <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读二/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
