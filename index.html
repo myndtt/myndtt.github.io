@@ -316,7 +316,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h1 id="Openstack之Nova源代码简读二"><a href="#Openstack之Nova源代码简读二" class="headerlink" title="Openstack之Nova源代码简读二"></a>Openstack之Nova源代码简读二</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图</p>
+              <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。更简单清楚的nova各组件协调图</p>
 <p><img src="https://myndtt.github.io/images/69.jpg" alt></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>客户（可以是OpenStack最终用户，也可以是其他程序）向API（nova-api）发送请求：“帮我创建一个虚机”；</span><br><span class="line"><span class="number">2.</span>API对请求做一些必要处理后，向Messaging（RabbitMQ）发送了一条消息：“让Scheduler创建一个虚机”；</span><br><span class="line"><span class="number">3.</span>Scheduler（nova-scheduler）从Messaging获取到API发给它的消息，然后执行调度算法，从若干计算节点中选出节点 A ；</span><br><span class="line"><span class="number">4.</span>Scheduler向Messaging发送了一条消息：“在计算节点 A 上创建这个虚机”</span><br><span class="line"><span class="number">5.</span>计算节点 A 的Compute（nova-compute）从Messaging中获取到Scheduler发给它的消息，然后在本节点的Hypervisor上启动虚机；</span><br><span class="line"><span class="number">6.</span>在虚机创建的过程中，Compute如果需要查询或更新数据库信息，会通过Messaging向Conductor（nova-conductor）发送消息，Conductor负责数据库访问。</span><br></pre></td></tr></table></figure>
           
