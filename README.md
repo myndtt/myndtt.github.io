@@ -1,0 +1,2 @@
+# myndtt.github.io
+blog
