@@ -185,7 +185,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keystone/">keystone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nova/">nova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
                     </div>
                 </section>
                 
@@ -287,6 +287,292 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Openstack之Nova源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/21/Openstack之Nova源代码简读一/" class="article-date">
+      <time datetime="2019-11-21T11:42:01.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/21/Openstack之Nova源代码简读一/">Openstack之Nova源代码简读一</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
+<p>Compute Service Nova 是 OpenStack 最核心的服务，负责维护和管理云环境的计算资源。OpenStack 作为 IaaS 的云操作系统，虚拟机生命周期管理也就是通过 Nova 来实现的。openstack中其他的组件都可以看做为Nova服务。Nova组件有以下六部分组成： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> API服务器 API Server（Nova-api） </span><br><span class="line"><span class="number">2</span> 计算工作者Compute Workers（Nova-compute） </span><br><span class="line"><span class="number">3</span> 网络控制器Network Controller（Nova-network） </span><br><span class="line"><span class="number">4</span> 卷工作者Volume Worker（Nova-volume） </span><br><span class="line"><span class="number">5</span> 调度器Schedule（Nova-schedule） </span><br><span class="line"><span class="number">6</span> 消息队列Message Queue（rabbitmq server）</span><br></pre></td></tr></table></figure>
+<p>具体概念可查看<a href="https://blog.csdn.net/ohenry88/article/details/75267742" target="_blank" rel="noopener">这篇</a>，或者<a href="https://mp.weixin.qq.com/s?__biz=MzIwMTM5MjUwMg==&amp;mid=2653587855&amp;idx=1&amp;sn=06cc0f77ed94ec69b983d27a0e657b13&amp;chksm=8d308196ba4708809892f84dc6367cade3864b1ba7fec89d792a8baefe3c00fb80b74557f720&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">这篇</a></p>
+<p>需要注意的是Openstack Nova 仅仅是作为云计算虚拟机的管理工具，其本身并不提供任何的虚拟化技术，而是交由具体的 Hypervisor 来实现虚拟机的创建和管理。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nova/">nova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openstack/">openstack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/11/21/Openstack之Nova源代码简读一/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Openstack之keystone源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/21/Openstack之keystone源代码简读一/" class="article-date">
+      <time datetime="2019-11-21T09:38:18.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/21/Openstack之keystone源代码简读一/">Openstack之keystone源代码简读一</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
+<p>作为 OpenStack 的基础支持服务，Keystone 做下面这几件事情：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、管理用户及其权限</span><br><span class="line">    不同用户拥有不同权限。这里的权限不仅仅指的是用户对于某项资源的权限，也包括对某项用户的权限。</span><br><span class="line"><span class="number">2</span>、维护 OpenStack Services 的 Endpoint</span><br><span class="line">Endpoint 是一个网络上可访问的地址，通常是一个 URL。Service 通过 Endpoint 暴露自己的 API，Keystone 负责管理和维护每个 Service 的 Endpoint。（关键）</span><br><span class="line"><span class="number">3.</span>Authentication（认证）和 Authorization（鉴权）</span><br></pre></td></tr></table></figure>
+<p>更多基本概念的介绍可以查看<a href="https://blog.csdn.net/zhongbeida_xue/article/details/78654676" target="_blank" rel="noopener">OpenStack keystone详解及调优</a>和<a href="https://mp.weixin.qq.com/s?__biz=MzIwMTM5MjUwMg==&amp;mid=2653587894&amp;idx=1&amp;sn=877a9cb2c23f242e45e7c113f2d2440f&amp;chksm=8d3081afba4708b9295debc08ac8159927733a1429a5f488ce136370984be15e6039b3496b46&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">理解 Keystone 核心概念 - 每天5分钟玩转 OpenStack(18)</a>，<a href="https://www.cnblogs.com/linhaifeng/p/6248086.html" target="_blank" rel="noopener">推荐看</a></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keystone/">keystone</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openstack/">openstack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/11/21/Openstack之keystone源代码简读一/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Openstack之keystone源代码简读二" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/21/Openstack之keystone源代码简读二/" class="article-date">
+      <time datetime="2019-11-21T09:37:48.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/21/Openstack之keystone源代码简读二/">Openstack之keystone源代码简读二</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>上次谈到<code>initialize_admin_application</code> ，今天来看看。</p>
+<h2 id="二、APP的启动"><a href="#二、APP的启动" class="headerlink" title="二、APP的启动"></a>二、APP的启动</h2><p><code>wsgi.py</code>文件的有两个初始化函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_admin_application</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> initialize_application(name=<span class="string">'admin'</span>,</span><br><span class="line">                                  config_files=_get_config_files())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_public_application</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> initialize_application(name=<span class="string">'main'</span>,</span><br><span class="line">                                  config_files=_get_config_files())</span><br></pre></td></tr></table></figure>
+<p>都指向了<code>initialize_application</code>，进入得：</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keystone/">keystone</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openstack/">openstack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/11/21/Openstack之keystone源代码简读二/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Openstack之Glance源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/09/22/Openstack之Glance源代码简读一/" class="article-date">
+      <time datetime="2019-09-22T05:13:59.000Z" itemprop="datePublished">2019-09-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
+<p>作为 OpenStack 的基础支持服务，Keystone 做下面这几件事情：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenStack Glance是一种提供发现，注册，和下载的镜像服务。OpenStack Glance是一个提供虚拟机镜像的集中式仓库。通过Glance的RESTful API，可以查询镜像元数据下载镜像。虚拟机的镜像可以很方便的存储在各种地方，从简单的文件系统到对象存储系统(如OpenStack Swift项目)。</span><br></pre></td></tr></table></figure>
+<p>更多基本概念的介绍可以查看<a href="https://blog.csdn.net/dylloveyou/article/details/80530838" target="_blank" rel="noopener">一文读懂OpenStack Glance是什么 </a>。</p>
+<h2 id="二、安装"><a href="#二、安装" class="headerlink" title="二、安装"></a>二、安装</h2><p>我的机器是ubuntu 18，可以按照<a href="https://docs.openstack.org/glance/latest/install/install-ubuntu.html" target="_blank" rel="noopener">官网</a>安装。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/glance/">glance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openstack/">openstack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/09/22/Openstack之Glance源代码简读一/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-hadoop" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -348,6 +634,8 @@
   
    <!-- 添加打赏功能 只在文章详情中显示-->
      
+      
+     
 </article>
 
 
@@ -359,6 +647,367 @@
 
 
   
+    <article id="post-无题-二" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/29/无题-二/" class="article-date">
+      <time datetime="2018-03-29T03:08:21.000Z" itemprop="datePublished">2018-03-29</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/29/无题-二/">无题(二)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>过几天就是愚人节了，说一点胡言乱语吧,就几句话，其实就是想水一水。</p>
+<h3 id="0x00-chr"><a href="#0x00-chr" class="headerlink" title="0x00.chr"></a>0x00.chr</h3><p>chr(x)=chr(x+256)</p>
+<h3 id="0x01-时差"><a href="#0x01-时差" class="headerlink" title="0x01.时差"></a>0x01.时差</h3><p>韩国比中国快一个小时</p>
+<h3 id="0x02-MD5"><a href="#0x02-MD5" class="headerlink" title="0x02.MD5"></a>0x02.MD5</h3><p>二进制md5相等的有</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/03/29/无题-二/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-scrapy-浅分析-四" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/02/01/scrapy-浅分析-四/" class="article-date">
+      <time datetime="2018-02-01T11:45:11.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h1><p><a href="http://myndtt.com/2018/01/30/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%80/" target="_blank" rel="noopener">前面一</a></p>
+<p><a href="http://myndtt.com/2018/01/31/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%BA%8C/" target="_blank" rel="noopener">前面二</a></p>
+<p><a href="http://myndtt.com/2018/02/01/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%89/" target="_blank" rel="noopener">前面三</a></p>
+<p>这次接着上回要提到下载的地方</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_next_request_from_scheduler</span><span class="params">(self, spider)</span>:</span></span><br><span class="line">        slot = self.slot</span><br><span class="line">        request = slot.scheduler.next_request()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> request:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#去下载</span></span><br><span class="line">        d = self._download(request, spider)</span><br><span class="line">        <span class="comment">#处理下载返回结果</span></span><br><span class="line">        d.addBoth(self._handle_downloader_output, request, spider)</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.info(<span class="string">'Error while handling downloader output'</span>,</span><br><span class="line">                                           exc_info=failure_to_exc_info(f),</span><br><span class="line">                                           extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        d.addBoth(<span class="keyword">lambda</span> _: slot.remove_request(request))</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.info(<span class="string">'Error while removing request from slot'</span>,</span><br><span class="line">                                           exc_info=failure_to_exc_info(f),</span><br><span class="line">                                           extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        d.addBoth(<span class="keyword">lambda</span> _: slot.nextcall.schedule())</span><br><span class="line">        d.addErrback(<span class="keyword">lambda</span> f: logger.info(<span class="string">'Error while scheduling new request'</span>,</span><br><span class="line">                                           exc_info=failure_to_exc_info(f),</span><br><span class="line">                                           extra=&#123;<span class="string">'spider'</span>: spider&#125;))</span><br><span class="line">        <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/">scrapy</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/02/01/scrapy-浅分析-四/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-scrapy-浅分析-三" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/02/01/scrapy-浅分析-三/" class="article-date">
+      <time datetime="2018-02-01T02:05:18.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h1><p><a href="http://myndtt.com/2018/01/30/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%B8%80/" target="_blank" rel="noopener">前面一</a></p>
+<p><a href="http://myndtt.com/2018/01/31/scrapy-%E6%B5%85%E5%88%86%E6%9E%90-%E4%BA%8C/" target="_blank" rel="noopener">前面二</a></p>
+<p>这次看看引擎里面的东西。在此之前看看文档中的流程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Scrapy中的数据流由执行引擎控制，其过程如下:</span><br><span class="line"></span><br><span class="line">1.引擎打开一个网站(open a domain)，找到处理该网站的Spider并向该spider请求第一个要爬取的URL(s)。</span><br><span class="line">2.引擎从Spider中获取到第一个要爬取的URL并在调度器(Scheduler)以Request调度。</span><br><span class="line">3引擎向调度器请求下一个要爬取的URL。</span><br><span class="line">4.调度器返回下一个要爬取的URL给引擎，引擎将URL通过下载中间件(请求(request)方向)转发给下载器(Downloader)。</span><br><span class="line">------------------------------------------------------------------（下面下一篇提到）</span><br><span class="line">5.一旦页面下载完毕，下载器生成一个该页面的Response，并将其通过下载中间件(返回(response)方向)发送给引擎。</span><br><span class="line">6.引擎从下载器中接收到Response并通过Spider中间件(输入方向)发送给Spider处理。</span><br><span class="line">7.Spider处理Response并返回爬取到的Item及(跟进的)新的Request给引擎。</span><br><span class="line">8.引擎将(Spider返回的)爬取到的Item给Item Pipeline，将(Spider返回的)Request给调度器。</span><br><span class="line">9.(从第二步)重复直到调度器中没有更多地request，引擎关闭该网站。</span><br></pre></td></tr></table></figure>
+<h1 id="0x01-引擎"><a href="#0x01-引擎" class="headerlink" title="0x01.引擎"></a>0x01.引擎</h1><p><img src="https://myndtt.github.io/images/59.png" alt="59"></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/">scrapy</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/02/01/scrapy-浅分析-三/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-scrapy-浅分析-二" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/31/scrapy-浅分析-二/" class="article-date">
+      <time datetime="2018-01-31T02:46:24.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h1><p><a href="https://myndtt.github.io/2018/01/30/scrapy-浅分析-一/">前面提到了</a>，所以目前要开始从<code>crawl</code>说起，也即<code>cmdline.py</code>文件里面的如下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmd.crawler_process = CrawlerProcess(settings)</span><br><span class="line">_run_print_help(parser, _run_command, cmd, args, opts)</span><br><span class="line">sys.exit(cmd.exitcode)</span><br></pre></td></tr></table></figure>
+<p>所以先进入<code>crawler.py</code>文件找到<code>CrawlerProcess</code>类。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/">scrapy</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/01/31/scrapy-浅分析-二/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-scrapy-浅分析-一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/30/scrapy-浅分析-一/" class="article-date">
+      <time datetime="2018-01-30T07:13:40.000Z" itemprop="datePublished">2018-01-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h1><p>相信大家都用过python的scrapy框架写给爬虫。然后就想看看这个框架的简单执行流程。</p>
+<h1 id="0x01-大体架构"><a href="#0x01-大体架构" class="headerlink" title="0x01.大体架构"></a>0x01.大体架构</h1><p>官方架构图如下</p>
+<p><img src="http://myndtt.github.io/images/58.png" alt="architecture"></p>
+<p>图大体架构很清晰，实际以例子来看看，一般我们的爬虫以如下代码开始运行(命令行是一样的)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> cmdline</span><br><span class="line"></span><br><span class="line">cmdline.execute(<span class="string">"scrapy crawl xxx"</span>.split())</span><br></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/">scrapy</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/01/30/scrapy-浅分析-一/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">

@@ -185,7 +185,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keystone/">keystone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keystone/">keystone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nova/">nova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
                     </div>
                 </section>
                 
@@ -287,6 +287,80 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-flask-v0-1源码简单分析" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/22/flask-v0-1源码简单分析/" class="article-date">
+      <time datetime="2018-01-22T05:50:17.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h2><p>想学习python的flask，看了《FlaskWeb开发：基于Python的Web应用开发实战》这本书，觉得很OK👌。之前彭师兄分析过flask v0.1的源码，听说代码不长，加之网上解释甚多，所以自己也想看看，就其本身，本文无意义，有错误更是可能，只是记录而已。</p>
+<h2 id="0x01-获取"><a href="#0x01-获取" class="headerlink" title="0x01.获取"></a>0x01.获取</h2><p>第一步获取<code>git clone https://github.com/pallets/flask.git</code>,这是最新版本的</p>
+<p>第二步 <code>git tag</code>看版本</p>
+<p>第三步<code>git reset --hard xx</code>回退到对应版本</p>
+<p>最后是这样</p>
+<p><img src="http://myndtt.github.io/images/54.png" alt="54"></p>
+<p>主要内容在flask.py文件里面</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/01/22/flask-v0-1源码简单分析/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-无题-一" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -317,21 +391,16 @@
       
           
         <a id="more"></a>
-
 <p>这次没有主题，只是记录一下最近看到的，所以文章会很短。2018,先从胡说八道开始…</p>
 <h2 id="0x00-一次惊叹-linux中的通配符"><a href="#0x00-一次惊叹-linux中的通配符" class="headerlink" title="0x00 一次惊叹 linux中的通配符"></a>0x00 一次惊叹 linux中的通配符</h2><p>关于linux的通配符有好几种 </p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">通配符</span><br><span class="line">它是由<span class="keyword">shell</span><span class="bash">解析，并且一般用于匹配文件名，实际上就是shell解释器去解析的特殊符号，linux系统通配符有几下几种：</span></span><br><span class="line">*：匹配任意多个字符</span><br><span class="line">?：匹配任意一个字符</span><br><span class="line">[...]：匹配中括号内出现的任意一个字符</span><br><span class="line">[!...]：不匹配中括号内出现的任意一个字符</span><br><span class="line"> </span><br><span class="line">一般出现在要<span class="keyword">shell</span><span class="bash">命令或脚本中，匹配特定的文件名</span></span><br></pre></td></tr></table></figure>
-
 <p>上次有提到过<code>*</code>,这里是<code>?</code>,linux中的通配符可以用于匹配相应的任意字符，所以可以用此在命令执行中绕过被pass的字符。</p>
 <h2 id="0x01-一次实验-UNLINK与file-Put-Contents"><a href="#0x01-一次实验-UNLINK与file-Put-Contents" class="headerlink" title="0x01 一次实验 UNLINK与file_Put_Contents"></a>0x01 一次实验 UNLINK与file_Put_Contents</h2><p>几个星期前新测的，来源于某圈主提的一个问题，一开始有人回答了Linux下的，所以就没测，实际上windows下还有几种。比如截断，并加上通配符等…</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//windows环境</span></span><br><span class="line">$filename=<span class="keyword">__DIR__</span>.<span class="string">'///4.php'</span>;</span><br><span class="line">$filename1=<span class="keyword">__DIR__</span>.<span class="string">'/5.php/.'</span>;</span><br><span class="line"><span class="keyword">echo</span> $filename.<span class="string">"&lt;/br&gt;"</span>.$filename1;</span><br><span class="line">$data=<span class="string">'&lt;?php phpinfo(); ?&gt;'</span>;</span><br><span class="line">file_put_contents($filename,$data);</span><br><span class="line"><span class="comment">//可以加入$data到文件中</span></span><br><span class="line">file_put_contents($filename1,$data);</span><br><span class="line"><span class="comment">//可以加入$data到文件中</span></span><br><span class="line"><span class="keyword">if</span>(file_exists($filename))&#123;</span><br><span class="line">	<span class="comment">//file_exists判断为是</span></span><br><span class="line">	unlink($filname);<span class="comment">//不执行删除操作,参数无效</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(file_exists($filename1))&#123;</span><br><span class="line">	<span class="comment">//file_exists判断为否</span></span><br><span class="line">	unlink($filname1);<span class="comment">//不执行</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="0x02一段-jsfuck"><a href="#0x02一段-jsfuck" class="headerlink" title="0x02一段 jsfuck"></a>0x02一段 jsfuck</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSFuck <span class="keyword">is</span> an esoteric <span class="keyword">and</span> educational programming style based <span class="keyword">on</span> <span class="keyword">the</span> atomic parts <span class="keyword">of</span> JavaScript. It uses only six different <span class="built_in">characters</span> <span class="keyword">to</span> <span class="built_in">write</span> <span class="keyword">and</span> execute code.</span><br></pre></td></tr></table></figure>
-
 <p>有时候在浏览器的控制台执行jsfcuk 得不到想要的结果，不妨将最后的<code>()</code>改为<code>toString()</code>.</p>
 <h2 id="0x03-一个开源项目"><a href="#0x03-一个开源项目" class="headerlink" title="0x03 一个开源项目"></a>0x03 一个开源项目</h2><p><a href="http://itchat.readthedocs.io/zh/latest/" target="_blank" rel="noopener">http://itchat.readthedocs.io/zh/latest/</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Created on Wed Jan 10 16:08:13 2018</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: myndtt</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> itchat</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_response</span><span class="params">(msg)</span>:</span></span><br><span class="line">    apiurl=<span class="string">'http://www.tuling123.com/openapi/api'</span></span><br><span class="line">    data=&#123;</span><br><span class="line">        <span class="string">'key'</span>:<span class="string">'db4c3be6c40f43cb9e4f33120f302547'</span>,</span><br><span class="line">        <span class="string">'info'</span>:msg,</span><br><span class="line">        <span class="string">'useid'</span>:<span class="string">'myndtt'</span>,</span><br><span class="line">            &#125;</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r=requests.post(apiurl,data=data).json()</span><br><span class="line">        <span class="keyword">return</span> r.get(<span class="string">'text'</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"><span class="meta">@itchat.msg_register(itchat.content.TEXT)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_content</span><span class="params">(msg)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> get_response(msg[<span class="string">'Text'</span>])</span><br><span class="line"><span class="comment">#@itchat.msg_register([itchat.content.TEXT],isGroupChat=True)</span></span><br><span class="line"><span class="comment">#def print_content(msg):</span></span><br><span class="line"><span class="comment">#   return get_response(msg['Text'])</span></span><br><span class="line">itchat.auto_login(<span class="literal">True</span>)</span><br><span class="line">itchat.run()</span><br></pre></td></tr></table></figure>
-
 <p>测试的时候很尴尬 要小心 机器人可没<code>节操</code> 东西很简单 权当娱乐</p>
 <h2 id="0X04-一本书"><a href="#0X04-一本书" class="headerlink" title="0X04 一本书"></a>0X04 一本书</h2><p><a href="https://yeasy.gitbooks.io/docker_practice/content/" target="_blank" rel="noopener">https://yeasy.gitbooks.io/docker_practice/content/</a></p>
 <p>前段时间的比赛用到了docker 以往知道docker 但是只知道大概 没好好用过 这次将彭 李等师兄的完美架构好好<code>学习</code>了一番  深入颇多。这本书写的很全，入门到实践docker 可以一看</p>
@@ -399,9 +468,9 @@
       
           
               <h2 id="0x00-打字机"><a href="#0x00-打字机" class="headerlink" title="0x00.打字机"></a>0x00.打字机</h2><p>简单扯一下，大家都知道，几乎所有的编程语言都有(反)序列化这种机制，可以将一些对象，数组等通过<code>某种方式</code>变成可以便捷传输和存储(后面将提到)的形式，如字符串。当然php也不例外。</p>
-<p><img src="https://myndtt.github.io%5Cimages%5C43.png" alt="43"></p>
+<p><img src="https://myndtt.github.io\images\43.png" alt="43"></p>
 <p>同时在php有一个这样有意思的设置–&gt;<code>php默认的SESSION会话机制 存储在文件系统的会话数据的内容是已经序列化后的内容,程序执行session_start()后PHP会自动读取文件并unserialize反序列化成数组赋值给超全局变量$_SESSION</code> (这句话是没错的)。</p>
-<p><img src="https://myndtt.github.io%5Cimages%5C44.png" alt="44"></p>
+<p><img src="https://myndtt.github.io\images\44.png" alt="44"></p>
 <p>​       <code>(session_register这个函数功能即是可以在全部变量中session定义一个新的变量)</code></p>
           
       
@@ -896,10 +965,8 @@
 <p>一.题目链接: <a href="http://los.eagle-jump.org/orc_47190a4d33f675a601f8def32df2583a.php" target="_blank" rel="noopener">http://los.eagle-jump.org/orc_47190a4d33f675a601f8def32df2583a.php</a></p>
 <p>代码：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">  <span class="keyword">include</span> <span class="string">"./config.php"</span>; </span><br><span class="line">  login_chk(); </span><br><span class="line">  dbconnect(); </span><br><span class="line">  <span class="keyword">if</span>(preg_match(<span class="string">'/prob|_|\.|\(\)/i'</span>, $_GET[pw])) <span class="keyword">exit</span>(<span class="string">"No Hack ~_~"</span>); </span><br><span class="line">  $query = <span class="string">"select id from prob_orc where id='admin' and pw='&#123;$_GET[pw]&#125;'"</span>; </span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"&lt;hr&gt;query : &lt;strong&gt;&#123;$query&#125;&lt;/strong&gt;&lt;hr&gt;&lt;br&gt;"</span>; </span><br><span class="line">  $result = @mysql_fetch_array(mysql_query($query)); </span><br><span class="line">  <span class="keyword">if</span>($result[<span class="string">'id'</span>]) <span class="keyword">echo</span> <span class="string">"&lt;h2&gt;Hello admin&lt;/h2&gt;"</span>; </span><br><span class="line">  $_GET[pw] = addslashes($_GET[pw]); </span><br><span class="line">  $query = <span class="string">"select pw from prob_orc where id='admin' and pw='&#123;$_GET[pw]&#125;'"</span>; </span><br><span class="line">  $result = @mysql_fetch_array(mysql_query($query)); </span><br><span class="line">  <span class="keyword">if</span>(($result[<span class="string">'pw'</span>]) &amp;&amp; ($result[<span class="string">'pw'</span>] == $_GET[<span class="string">'pw'</span>])) solve(<span class="string">"orc"</span>); </span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p>这代码够简单的啦，还带回显的。看了看最后，估计是要我们盲注得到pw，这还不简单？写个脚本跑去来，得到pw长度，二分法去提取好了。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pw=<span class="string">''</span> || length(pw)&gt;<span class="number">0</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">pw=<span class="string">''</span> || ascii(substr(pw,<span class="number">1</span>,<span class="number">1</span>))&gt;<span class="number">0</span></span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
-
 <p>对，确实如此，但是实际上我按上面那种方法怎么爆破都不对，甚至怀疑过我的代码，出轨了？</p>
           
       
@@ -917,79 +984,6 @@
       
         <p class="article-more-link">
           <a href="/2017/10/26/几道sqli/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-   <!-- 添加打赏功能 只在文章详情中显示-->
-     
-      
-     
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-url中的下划线" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/22/url中的下划线/" class="article-date">
-      <time datetime="2017-10-22T03:18:40.000Z" itemprop="datePublished">2017-10-22</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/22/url中的下划线/">url中的下划线</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00.前言"></a>0x00.前言</h3><p>今天再做一道CTF题感觉挺有意思的。</p>
-<p>题目链接 <a href="http://solveme.safflower.kr/prob/give_me_a_link" target="_blank" rel="noopener">http://solveme.safflower.kr/prob/give_me_a_link</a></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">   error_reporting(<span class="number">0</span>);</span><br><span class="line">   <span class="keyword">require</span> <span class="keyword">__DIR__</span>.<span class="string">'/lib.php'</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'url'</span>]))&#123;</span><br><span class="line">       $url = $_GET[<span class="string">'url'</span>];</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span>(!preg_match(<span class="string">'/^https?\:\/\/'</span>.$_SERVER[<span class="string">'HTTP_HOST'</span>].<span class="string">'/i'</span>, $url))&#123;</span><br><span class="line">           <span class="keyword">die</span>(<span class="string">'Not allowed URL'</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span>(preg_match(<span class="string">'/_|\s|\0/'</span>, $url))&#123;</span><br><span class="line">           <span class="keyword">die</span>(<span class="string">'Not allowed character'</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       $parse = parse_url($url);</span><br><span class="line">       <span class="keyword">if</span>(basename($parse[<span class="string">'path'</span>]) !== <span class="string">'plz_give_me'</span>)&#123;</span><br><span class="line">           <span class="keyword">die</span>(<span class="string">'Not allowed path'</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       $ch = curl_init();</span><br><span class="line">       curl_setopt($ch, CURLOPT_URL, $parse[<span class="string">'scheme'</span>].<span class="string">'://'</span>.$parse[<span class="string">'host'</span>].<span class="string">'/'</span>.$flag);</span><br><span class="line">       curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);</span><br><span class="line">       curl_exec($ch);</span><br><span class="line">       curl_close($ch);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">echo</span> <span class="string">'Okay&lt;hr&gt;'</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   highlight_file(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
-
-<p>代码比较简单，无非就是几个绕过。 主要就是后面的两个正则感觉挺有意思，很显然焦点在于下划线。其实RFC明确禁止将下划线作为域名的一部分，容易造成误解破坏网络秩序。但是以前做的题中也有出现参数中带有点或者</p>
-<p>空格变成下划线的例子。就是那一道smile的题。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/audit/">audit</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/22/url中的下划线/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

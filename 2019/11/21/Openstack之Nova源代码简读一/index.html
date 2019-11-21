@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="myndtt">
+
+
+
+<meta name="description" content="一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。 Compute Service Nova 是 OpenStack 最核心的服务，负责维护和管理云环境的计算资源。OpenStack 作为 IaaS 的云操作系统，虚拟机生命周期管理也就是通过 Nova 来实现的。openstack中其他的组件都可以看做为Nova服务。Nova组件有以下六部分组成：  123456">
+<meta name="keywords" content="记录,openstack,nova">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack之Nova源代码简读一">
+<meta property="og:url" content="https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读一/index.html">
+<meta property="og:site_name" content="myndtt || blog">
+<meta property="og:description" content="一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。 Compute Service Nova 是 OpenStack 最核心的服务，负责维护和管理云环境的计算资源。OpenStack 作为 IaaS 的云操作系统，虚拟机生命周期管理也就是通过 Nova 来实现的。openstack中其他的组件都可以看做为Nova服务。Nova组件有以下六部分组成：  123456">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://myndtt.github.io/images/67.jpg">
+<meta property="og:image" content="https://myndtt.github.io/images/68.jpg">
+<meta property="og:updated_time" content="2019-11-21T11:56:25.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Openstack之Nova源代码简读一">
+<meta name="twitter:description" content="一、前言学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。 Compute Service Nova 是 OpenStack 最核心的服务，负责维护和管理云环境的计算资源。OpenStack 作为 IaaS 的云操作系统，虚拟机生命周期管理也就是通过 Nova 来实现的。openstack中其他的组件都可以看做为Nova服务。Nova组件有以下六部分组成：  123456">
+<meta name="twitter:image" content="https://myndtt.github.io/images/67.jpg">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="myndtt || blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/images/1.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Openstack之Nova源代码简读一 | myndtt || blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/images/1.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">myndtt</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">从天堂到彼界 路过人间</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/audit/">audit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/game/">game</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/glance/">glance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keystone/">keystone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nova/">nova</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sniperoj/">sniperoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqli/">sqli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlid/">sqlid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习/">学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实验吧/">实验吧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/点滴/">点滴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/胡说八道/">胡说八道</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录-hadoop/">记录 hadoop</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.sec-wiki.com/">sec-wiki</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.myh0st.cn/">myh0st</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.leavesongs.com/">大P神</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.laruence.com/">风神(风雪之隅)</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yulegeyu.com/">雨师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://momomoxiaoxi.com/">小西师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://lorexxar.cn/">LoRexxar</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.yqxiaojunjie.com/">乐清师傅</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://0x48.pw/">Hcamael</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://chybeta.github.io/">Chybeta</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/lcamry">lcamry</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://www.lynahex.com/">lynahex</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy/">柠檬师傅</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">小菜鸡 奋斗中...</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>   
+   	 <div id="circle"></div>
+		<div id="circletext"><strong style="font-size: 12px;"><a>词不达意</a></strong></div>
+		<div id="circle1"></div>             
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">myndtt</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/images/1.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">myndtt</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">从天堂到彼界 路过人间</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:admin@myndtt.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/myndtt" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Openstack之Nova源代码简读一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/11/21/Openstack之Nova源代码简读一/" class="article-date">
+      <time datetime="2019-11-21T11:42:01.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Openstack之Nova源代码简读一
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nova/">nova</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openstack/">openstack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/记录/">记录</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>学习openstack,对其大体框架已经熟悉，学习其内部基本原理，聊以记录。</p>
+<p>Compute Service Nova 是 OpenStack 最核心的服务，负责维护和管理云环境的计算资源。OpenStack 作为 IaaS 的云操作系统，虚拟机生命周期管理也就是通过 Nova 来实现的。openstack中其他的组件都可以看做为Nova服务。Nova组件有以下六部分组成： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> API服务器 API Server（Nova-api） </span><br><span class="line"><span class="number">2</span> 计算工作者Compute Workers（Nova-compute） </span><br><span class="line"><span class="number">3</span> 网络控制器Network Controller（Nova-network） </span><br><span class="line"><span class="number">4</span> 卷工作者Volume Worker（Nova-volume） </span><br><span class="line"><span class="number">5</span> 调度器Schedule（Nova-schedule） </span><br><span class="line"><span class="number">6</span> 消息队列Message Queue（rabbitmq server）</span><br></pre></td></tr></table></figure>
+<p>具体概念可查看<a href="https://blog.csdn.net/ohenry88/article/details/75267742" target="_blank" rel="noopener">这篇</a>，或者<a href="https://mp.weixin.qq.com/s?__biz=MzIwMTM5MjUwMg==&amp;mid=2653587855&amp;idx=1&amp;sn=06cc0f77ed94ec69b983d27a0e657b13&amp;chksm=8d308196ba4708809892f84dc6367cade3864b1ba7fec89d792a8baefe3c00fb80b74557f720&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">这篇</a></p>
+<p>需要注意的是Openstack Nova 仅仅是作为云计算虚拟机的管理工具，其本身并不提供任何的虚拟化技术，而是交由具体的 Hypervisor 来实现虚拟机的创建和管理。</p>
+<a id="more"></a>
+<h2 id="二、安装"><a href="#二、安装" class="headerlink" title="二、安装"></a>二、安装</h2><p>官网<a href="https://docs.openstack.org/nova/latest/install/controller-install-ubuntu.html#prerequisites" target="_blank" rel="noopener">安装</a></p>
+<h2 id="三、nova-api"><a href="#三、nova-api" class="headerlink" title="三、nova-api"></a>三、nova-api</h2><p>nova-api 是整个 Nova 组件的门户，所有对 Nova 的请求都首先由 nova-api 处理。nova-api 向外界暴露若干 HTTP REST API 接口 。具体能做的事情，包括下图。</p>
+<p><img src="https://myndtt.github.io/images/67.jpg" alt="4"></p>
+<p>有点多。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    config.parse_args(sys.argv)</span><br><span class="line">    logging.setup(CONF, <span class="string">"nova"</span>)</span><br><span class="line">    utils.monkey_patch()</span><br><span class="line">    objects.register_all()</span><br><span class="line">    gmr_opts.set_defaults(CONF)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'osapi_compute'</span> <span class="keyword">in</span> CONF.enabled_apis:</span><br><span class="line">        <span class="comment"># NOTE(mriedem): This is needed for caching the nova-compute service</span></span><br><span class="line">        <span class="comment"># version.</span></span><br><span class="line">        objects.Service.enable_min_version_cache()</span><br><span class="line">    log = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line">    gmr.TextGuruMeditation.setup_autorun(version, conf=CONF)</span><br><span class="line"></span><br><span class="line">    launcher = service.process_launcher()</span><br><span class="line">    started = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> api <span class="keyword">in</span> CONF.enabled_apis:<span class="comment">#启动各类服务</span></span><br><span class="line">        should_use_ssl = api <span class="keyword">in</span> CONF.enabled_ssl_apis</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            server = service.WSGIService(api, use_ssl=should_use_ssl)</span><br><span class="line">            launcher.launch_service(server, workers=server.workers <span class="keyword">or</span> <span class="number">1</span>)</span><br><span class="line">            started += <span class="number">1</span></span><br><span class="line">        <span class="keyword">except</span> exception.PasteAppNotFound <span class="keyword">as</span> ex:</span><br><span class="line">            log.warning(<span class="string">"%s. ``enabled_apis`` includes bad values. "</span></span><br><span class="line">                        <span class="string">"Fix to remove this warning."</span>, ex)</span><br></pre></td></tr></table></figure>
+<p>具体服务在<code>CONF/SERVICE.PY</code>中定义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cfg.ListOpt(<span class="string">'enabled_apis'</span>,</span><br><span class="line">            item_type=cfg.types.String(choices=[<span class="string">'osapi_compute'</span>,</span><br><span class="line">                                                <span class="string">'metadata'</span>]),</span><br><span class="line">            default=[<span class="string">'osapi_compute'</span>, <span class="string">'metadata'</span>],</span><br><span class="line">            help=<span class="string">"List of APIs to be enabled by default."</span>),</span><br><span class="line">cfg.ListOpt(<span class="string">'enabled_ssl_apis'</span>,</span><br><span class="line">            default=[],</span><br><span class="line">            help=<span class="string">"""</span></span><br></pre></td></tr></table></figure>
+<p>像之前的glance中的<code>glance-api</code>启动一样。找到nova的配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[composite:osapi_compute]</span><br><span class="line">use = call:nova.api.openstack.urlmap:urlmap_factory</span><br><span class="line">/: oscomputeversions</span><br><span class="line"><span class="comment"># v21 is an exactly feature match for v2, except it has more stringent</span></span><br><span class="line"><span class="comment"># input validation on the wsgi surface (prevents fuzzing early on the</span></span><br><span class="line"><span class="comment"># API). It also provides new features via API microversions which are</span></span><br><span class="line"><span class="comment"># opt into for clients. Unaware clients will receive the same frozen</span></span><br><span class="line"><span class="comment"># v2 API feature set, but with some relaxed validation</span></span><br><span class="line">/v2: openstack_compute_api_v21_legacy_v2_compatible</span><br><span class="line">/v2<span class="number">.1</span>: openstack_compute_api_v21</span><br><span class="line"> <span class="comment">#。。。。。</span></span><br><span class="line">[app:osapi_compute_app_v21]</span><br><span class="line">paste.app_factory = nova.api.openstack.compute:APIRouterV21.factory<span class="comment">#跟进</span></span><br></pre></td></tr></table></figure>
+<p>根据这些配置，由 paste.deploy 库生成 app，然后通过 eventlet 这个python 的多线程网络库创建线程池，去运行这些 app，响应 API 请求。 跟进<code>nova.api.openstack.compute:APIRouterV21.factory</code>，寻找到路由。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以创建实例为例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, req, body)</span>:</span></span><br><span class="line">    <span class="string">"""Creates a new server for a given user."""</span></span><br><span class="line">    context = req.environ[<span class="string">'nova.context'</span>]</span><br><span class="line">    server_dict = body[<span class="string">'server'</span>]</span><br><span class="line">    password = self._get_server_admin_password(server_dict)</span><br><span class="line">    name = common.normalize_name(server_dict[<span class="string">'name'</span>])</span><br><span class="line">    description = name</span><br><span class="line">    <span class="keyword">if</span> api_version_request.is_supported(req, min_version=<span class="string">'2.19'</span>):</span><br><span class="line">        description = server_dict.get(<span class="string">'description'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Arguments to be passed to instance create function</span></span><br><span class="line">    create_kwargs = &#123;&#125;<span class="comment">#以上获取post的各类参数，计划创建。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># TODO(alex_xu): This is for back-compatible with stevedore</span></span><br><span class="line">    <span class="comment"># extension interface. But the final goal is that merging</span></span><br><span class="line">    <span class="comment"># all of extended code into ServersController.</span></span><br><span class="line">    self._create_by_func_list(server_dict, create_kwargs, body)<span class="comment">#跟进</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    server_create_func_list = [</span><br><span class="line">    block_device_mapping.server_create,</span><br><span class="line">    block_device_mapping_v1.server_create,</span><br><span class="line">    config_drive.server_create,</span><br><span class="line">    keypairs.server_create,</span><br><span class="line">    multiple_create.server_create,</span><br><span class="line">    scheduler_hints.server_create,</span><br><span class="line">    security_groups.server_create,</span><br><span class="line">    user_data.server_create,</span><br><span class="line">]</span><br><span class="line"><span class="comment">#。。。。。</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_create_by_func_list</span><span class="params">(self, server_dict,</span></span></span><br><span class="line"><span class="function"><span class="params">                         create_kwargs, req_body)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> func <span class="keyword">in</span> self.server_create_func_list:</span><br><span class="line">        func(server_dict, create_kwargs, req_body)<span class="comment">#配置各类变量</span></span><br></pre></td></tr></table></figure>
+<p>回到<code>create</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    inst_type = flavors.get_flavor_by_flavor_id(</span><br><span class="line">            flavor_id, ctxt=context, read_deleted=<span class="string">"no"</span>)</span><br><span class="line"></span><br><span class="line">    supports_multiattach = common.supports_multiattach_volume(req)</span><br><span class="line">    (instances, resv_id) = self.compute_api.create(context,</span><br><span class="line">                    inst_type,</span><br><span class="line">                    image_uuid,</span><br><span class="line">                    display_name=name,</span><br><span class="line">                    display_description=description,</span><br><span class="line">                    availability_zone=availability_zone,</span><br><span class="line">                    forced_host=host, forced_node=node,</span><br><span class="line">                    metadata=server_dict.get(<span class="string">'metadata'</span>, &#123;&#125;),</span><br><span class="line">                    admin_password=password,</span><br><span class="line">                    requested_networks=requested_networks,</span><br><span class="line">                    check_server_group_quota=<span class="literal">True</span>,</span><br><span class="line">                    supports_multiattach=supports_multiattach,</span><br><span class="line">                    **create_kwargs)<span class="comment">#关键，跟进</span></span><br></pre></td></tr></table></figure>
+<p>通过<code>flavor_id</code>获取对应传递实例信息，进而创建实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> self._create_instance(</span><br><span class="line">                      context, instance_type,</span><br><span class="line">                      image_href, kernel_id, ramdisk_id,</span><br><span class="line">                      min_count, max_count,</span><br><span class="line">                      display_name, display_description,</span><br><span class="line">                      key_name, key_data, security_groups,</span><br><span class="line">                      availability_zone, user_data, metadata,</span><br><span class="line">                      injected_files, admin_password,</span><br><span class="line">                      access_ip_v4, access_ip_v6,</span><br><span class="line">                      requested_networks, config_drive,</span><br><span class="line">                      block_device_mapping, auto_disk_config,</span><br><span class="line">                      filter_properties=filter_properties,</span><br><span class="line">                      legacy_bdm=legacy_bdm,</span><br><span class="line">                      shutdown_terminate=shutdown_terminate,</span><br><span class="line">                      check_server_group_quota=check_server_group_quota,</span><br><span class="line">                      tags=tags, supports_multiattach=supports_multiattach)<span class="comment">#跟进</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Normalize and setup some parameters</span></span><br><span class="line">        <span class="keyword">if</span> reservation_id <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            reservation_id = utils.generate_uid(<span class="string">'r'</span>)</span><br><span class="line">        security_groups = security_groups <span class="keyword">or</span> [<span class="string">'default'</span>]</span><br><span class="line">        min_count = min_count <span class="keyword">or</span> <span class="number">1</span></span><br><span class="line">        max_count = max_count <span class="keyword">or</span> min_count</span><br><span class="line">        block_device_mapping = block_device_mapping <span class="keyword">or</span> []</span><br><span class="line">        tags = tags <span class="keyword">or</span> []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> image_href:</span><br><span class="line">            image_id, boot_meta = self._get_image(context, image_href)<span class="comment">#获取镜像信息</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            image_id = <span class="literal">None</span></span><br><span class="line">            boot_meta = self._get_bdm_image_metadata(</span><br><span class="line">                context, block_device_mapping, legacy_bdm)<span class="comment">#如果用户没有给出image相关的参数，则去查找镜像相关元信息</span></span><br><span class="line"></span><br><span class="line">        self._check_auto_disk_config(image=boot_meta,</span><br><span class="line">                                     auto_disk_config=auto_disk_config)</span><br></pre></td></tr></table></figure>
+<p>这部分代码主要是设置一些变量，如果用户没有设定，则系统自动生成一个或使用缺省值，security_groups表示网络安全组。继续跟进。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">block_device_mapping = self._check_and_transform_bdm(context,</span><br><span class="line">            base_options, instance_type, boot_meta, min_count, max_count,</span><br><span class="line">            block_device_mapping, legacy_bdm)<span class="comment">#进行调度</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># We can't do this check earlier because we need bdms from all sources</span></span><br><span class="line">        <span class="comment"># to have been merged in order to get the root bdm.</span></span><br><span class="line">        self._checks_for_create_and_rebuild(context, image_id, boot_meta,</span><br><span class="line">                instance_type, metadata, injected_files,</span><br><span class="line">                block_device_mapping.root_bdm())</span><br><span class="line"></span><br><span class="line">        instance_group = self._get_requested_instance_group(context,</span><br><span class="line">                                   filter_properties)</span><br><span class="line"></span><br><span class="line">        tags = self._create_tag_list_obj(context, tags)</span><br><span class="line"></span><br><span class="line">        instances_to_build = self._provision_instances(</span><br><span class="line">            context, instance_type, min_count, max_count, base_options,</span><br><span class="line">            boot_meta, security_groups, block_device_mapping,</span><br><span class="line">            shutdown_terminate, instance_group, check_server_group_quota,</span><br><span class="line">            filter_properties, key_pair, tags, supports_multiattach)<span class="comment">#进行调度</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> rs, build_request, im <span class="keyword">in</span> instances_to_build:</span><br><span class="line">    build_requests.append(build_request)</span><br><span class="line">    instance = build_request.get_new_instance(context)</span><br><span class="line">    instances.append(instance)</span><br><span class="line">    request_specs.append(rs)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">self.compute_task_api.build_instances(context,</span><br><span class="line">        instances=instances, image=boot_meta,</span><br><span class="line">        filter_properties=filter_properties,</span><br><span class="line">        admin_password=admin_password,</span><br><span class="line">        injected_files=injected_files,</span><br><span class="line">        requested_networks=requested_networks,</span><br><span class="line">        security_groups=security_groups,</span><br><span class="line">        block_device_mapping=block_device_mapping,</span><br><span class="line">        legacy_bdm=<span class="literal">False</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    self.compute_task_api.schedule_and_build_instances(</span><br><span class="line">        context,</span><br><span class="line">        build_requests=build_requests,</span><br><span class="line">        request_spec=request_specs,</span><br><span class="line">        image=boot_meta,</span><br><span class="line">        admin_password=admin_password,</span><br><span class="line">        injected_files=injected_files,</span><br><span class="line">        requested_networks=requested_networks,</span><br><span class="line">        block_device_mapping=block_device_mapping,</span><br><span class="line">        tags=tags)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> instances, reservation_id</span><br></pre></td></tr></table></figure>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>nova工作原理图如下所示</p>
+<p><img src="https://myndtt.github.io/images/68.jpg" alt="nova"></p>
+<p>但是目前，我们只是简单略读了整个过程，并且似乎与从传统的nova组件过程相冲突，因为没有提到queue。nova更多的细节还没看到。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/11/21/Openstack之Nova源代码简读一/">Openstack之Nova源代码简读一</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">myndtt</a></p>
+        <p><span>发布时间:</span>2019-11-21, 19:42:01</p>
+        <p><span>最后更新:</span>2019-11-21, 19:56:25</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/11/21/Openstack之Nova源代码简读一/" title="Openstack之Nova源代码简读一">https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读一/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://myndtt.github.io/2019/11/21/Openstack之Nova源代码简读一/　　作者: myndtt" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/11/21/Openstack之keystone源代码简读一/">
+                    Openstack之keystone源代码简读一
+                </a>
+            </div>
+        
+    </nav>
+
+  
+   <!-- 添加打赏功能 只在文章详情中显示-->
+     
+      
+     
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前言"><span class="toc-number">1.</span> <span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、安装"><span class="toc-number">2.</span> <span class="toc-text">二、安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、nova-api"><span class="toc-number">3.</span> <span class="toc-text">三、nova-api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、总结"><span class="toc-number">4.</span> <span class="toc-text">四、总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Openstack之Nova源代码简读一　| myndtt || blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2148375';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/11/21/Openstack之keystone源代码简读一/" title="下一篇: Openstack之keystone源代码简读一">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/Openstack之Nova源代码简读一/">Openstack之Nova源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/Openstack之keystone源代码简读一/">Openstack之keystone源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/21/Openstack之keystone源代码简读二/">Openstack之keystone源代码简读二</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/22/Openstack之Glance源代码简读一/">Openstack之Glance源代码简读一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/16/hadoop/">hadoop(笔记)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/无题-二/">无题(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-四/">scrapy 浅分析(四)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/scrapy-浅分析-三/">scrapy 浅分析(三)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/scrapy-浅分析-二/">scrapy 浅分析(二)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/30/scrapy-浅分析-一/">scrapy 浅分析(一)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/22/flask-v0-1源码简单分析/">flask v0.1源码简单分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/17/无题-一/">无题（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/php的session反序列化/">php的session反序列化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/parse-url/">parse_url</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/04/problem&solution/">problem&solution</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/iamsowly/">solveme.kr-iamsowly</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/一道anti sql/">从一道anti sql题讲起</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/the-in-ubuntu/">the “*” in ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/sniperoj-web-writeup/">sniperoj some web writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/几道sqli/">几道sql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/url中的下划线/">url中的下划线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/20/php两道题/">php两道题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/19/某年某月的某一天/">某年某月的某一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/17/小游戏 7 8 /">小游戏-7,8</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/08/小游戏 5，6/">小游戏5,6</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/小游戏 1 2 3 4/">小游戏1,2,3,4</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/结束&开始/">一段结束</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/Python 网易云签到/">python-网易云音乐签到，词云</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/实验吧 ctf 编程题(六)/">实验吧 CTF 编程题 （六）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(五)/">实验吧 CTF 编程题（五）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/24/实验吧 ctf 编程题(四)/">实验吧 CTF 编程题（四）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(三)/">实验吧 CTF 编程题（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(二)/">实验吧 CTF 编程题（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/实验吧 ctf 编程题(一)/">实验吧 CTF 编程题 （一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/Python-Django-别人轮子修改/">python Django别人的轮子修改</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/16/python-12306-查票/">python-12306-查票</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 myndtt
+            </div>
+            <div class="footer-right">
+                <a href="#" target="_blank" >没有你的天堂...</a> <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
